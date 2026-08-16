@@ -1,0 +1,20 @@
+title: Sadler Farms LLC
+tagline: Land & Farm Parcels in Alabama
+description: >-
+  Sadler Farms LLC owns and stewards farm and timber land parcels
+  in Alabama. Get in touch for inquiries.
+url: "https://sadlerfarmsllc.com"
+email: aa@a2cons.com
+
+# Build settings
+markdown: kramdown
+sass:
+  style: compressed
+
+# Files/dirs to exclude from the build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - vendor
+  - .github
