@@ -1,105 +1,335 @@
 ---
 layout: default
-title: Sadler Farms LLC
-description: Sadler Farms LLC owns and stewards farm and timber land parcels in Alabama.
+title: Sadler Farms — Lakeside Living on Lake Wheeler
+description: >-
+  Sadler Farms: 300 acres with about a mile of waterfront on Lake Wheeler and the
+  Tennessee River in Limestone County, Alabama — a vision for lakeside living.
+preload_image: /assets/media/video/film/poster.jpg
+video:
+  name: Sadler Farms from the air
+  description: Drone footage of Sadler Farms — pasture, mature forest and about a mile of Lake Wheeler shoreline in Limestone County, Alabama.
+  thumbnail: /assets/media/video/film/poster.jpg
+  content: /assets/media/video/film/master.m3u8
+  upload_date: 2026-09-29
+  duration: PT1M18S
 ---
+{% assign ph = '/assets/media/photos/' | relative_url %}
+{% assign vid = '/assets/media/video/' | relative_url %}
 
-<header class="hero">
+<header class="hero hero--video" id="top">
+  <div class="hero__media">
+    <video class="js-hls hero__video" data-src="{{ vid }}film/master.m3u8"
+           poster="{{ vid }}film/poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+  </div>
+
   <nav class="nav">
-    <span class="nav__brand"><span class="nav__mark">🌾</span> Sadler Farms <span>LLC</span></span>
+    <a class="nav__brand" href="#top"><span class="nav__mark">🌾</span> Sadler Farms</a>
     <div class="nav__links">
-      <a href="#about">About</a>
-      <a href="#land">Our Land</a>
-      {% comment %} Contact hidden for now — will point to realtor later.
-      <a class="btn btn--ghost" href="#contact">Contact</a>
-      {% endcomment %}
+      <a href="#vision">Vision</a>
+      <a href="#waterfront">Waterfront</a>
+      <a href="#land">The Land</a>
+      <a href="#location">Location</a>
+      <a href="#gallery">Gallery</a>
     </div>
   </nav>
 
   <div class="hero__content">
-    <p class="eyebrow">Alabama &middot; Family Landholding</p>
-    <h1 class="hero__title">Stewarding land for the long run.</h1>
+    <p class="eyebrow">Lake Wheeler &middot; Tennessee River &middot; Alabama</p>
+    <h1 class="hero__title">A new vision for lakeside living.</h1>
     <p class="hero__lede">
-      Sadler Farms LLC owns and manages farm and timber parcels across
-      Alabama — held with patience, care, and an eye toward the generations to come.
+      300 acres of rolling hills, mature forest and open fields, with about a mile
+      of waterfront on one of the widest stretches of Lake Wheeler.
     </p>
     <div class="hero__actions">
-      {% comment %} Contact CTA hidden for now — will point to realtor later.
-      <a class="btn" href="#contact">Get in touch →</a>
-      {% endcomment %}
-      <a class="btn" href="#land">Explore our land</a>
+      <button class="btn js-watch" type="button">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+        Watch the film
+      </button>
+      <a class="btn btn--ghost" href="#vision">Explore the vision</a>
     </div>
   </div>
 
-  <div class="hero__scroll">Scroll <span></span></div>
+  <div class="player-bar" data-for=".hero__video">
+    <button class="player-bar__sound js-sound" type="button" aria-pressed="false">
+      <svg class="icon-off" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg>
+      <svg class="icon-on" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 8v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
+      <span class="label-off">Turn sound on</span><span class="label-on">Sound on</span>
+    </button>
+    <label class="player-bar__quality">
+      <span class="visually-hidden">Video quality</span>
+      <select class="js-quality" aria-label="Video quality"><option value="-1">Auto</option></select>
+    </label>
+    <button class="player-bar__icon js-fullscreen" type="button" aria-label="Full screen">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+    </button>
+  </div>
 </header>
 
 <section class="stats">
-  <div class="stats__item"><span class="stats__num">AL</span><span class="stats__label">Rooted in Alabama</span></div>
-  <div class="stats__item"><span class="stats__num">Farm &amp; Timber</span><span class="stats__label">Land Types</span></div>
-  <div class="stats__item"><span class="stats__num">Generational</span><span class="stats__label">Stewardship</span></div>
+  <div class="stats__item"><span class="stats__num">300</span><span class="stats__label">Acres</span></div>
+  <div class="stats__item"><span class="stats__num">~1 mi</span><span class="stats__label">Of waterfront</span></div>
+  <div class="stats__item"><span class="stats__num">75+</span><span class="stats__label">Years, one family</span></div>
+  <div class="stats__item"><span class="stats__num">15 / 25</span><span class="stats__label">Min to Athens / Huntsville</span></div>
 </section>
 
 <main>
-  <section class="section" id="about">
+  <!-- ============================================================ Intro -->
+  <section class="section" id="vision">
+    <div class="wrap split">
+      <div class="split__text reveal">
+        <p class="eyebrow">The vision</p>
+        <h2 class="section__title">One extraordinary landscape.</h2>
+        <p>
+          Sadler Farms is a rare opportunity to create a distinctive waterfront community
+          on Lake Wheeler in Limestone County, Alabama — a place where rolling green hills,
+          mature forests and expansive lake views come together.
+        </p>
+        <p>
+          The vision is a thoughtfully planned community of approximately 300 residences,
+          from two-bedroom townhomes overlooking a common marina to private one-acre estate
+          homesites along the water — designed around the land rather than on top of it.
+        </p>
+        <p class="note">Concept only — subject to planning, engineering and approvals.</p>
+      </div>
+      <figure class="split__media reveal">
+        <img src="{{ ph }}41-1600.webp" width="1600" height="1198" srcset="{{ ph }}41-800.webp 800w, {{ ph }}41-1600.webp 1600w"
+             sizes="(max-width: 860px) 100vw, 55vw" alt="Open pasture and tree islands with Lake Wheeler beyond" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============================================================ Residences -->
+  <section class="section section--sand">
     <div class="wrap">
       <div class="section__head reveal">
-        <p class="eyebrow">Who we are</p>
-        <h2 class="section__title">Land held with care.</h2>
-        <p class="section__intro">
-          Sadler Farms LLC is a family landholding company. We own and
-          maintain productive farmland and woodland in Alabama, managing
-          each parcel for the long term rather than the quick return.
-        </p>
+        <p class="eyebrow">A diversity of residences</p>
+        <h2 class="section__title">Homes shaped by the setting.</h2>
+        <p class="section__intro">Three ways to live on the land — each placed where the landscape suits it best.</p>
       </div>
+      <div class="grid grid--3">
+        <article class="tile reveal">
+          <img src="{{ ph }}22-800.webp" width="800" height="599" alt="A sheltered cove on Lake Wheeler" loading="lazy">
+          <div class="tile__body">
+            <h3>Marina Townhomes</h3>
+            <p>Two-story, two-bedroom townhomes around a protected cove, looking out over the boats and the water.</p>
+          </div>
+        </article>
+        <article class="tile reveal">
+          <img src="{{ ph }}62-800.webp" width="800" height="599" alt="Wooded shoreline along the wide lake" loading="lazy">
+          <div class="tile__body">
+            <h3>Waterfront Estates</h3>
+            <p>Private one-acre homesites along about a mile of shoreline, with direct views across the widest part of the lake.</p>
+          </div>
+        </article>
+        <article class="tile reveal">
+          <img src="{{ ph }}42-800.webp" width="800" height="599" alt="Rolling pasture framed by mature trees" loading="lazy">
+          <div class="tile__body">
+            <h3>Homes Within Nature</h3>
+            <p>Residences set into the rolling hills, forest edges and open fields, linked by green space and walking trails.</p>
+          </div>
+        </article>
+      </div>
+      <p class="note note--center">Photos show the existing land. Residential types, locations and quantities would be set through the development planning process.</p>
+    </div>
+  </section>
 
-      <div class="grid" id="land">
-        <div class="card reveal">
-          <div class="card__icon">🌱</div>
-          <h3>Farmland</h3>
-          <p>Productive acreage suited to row crops, pasture, and hay,
-             managed with attention to soil health and stewardship.</p>
+  <!-- ============================================================ Waterfront -->
+  <section class="feature" id="waterfront">
+    <video class="js-hls feature__video" data-src="{{ vid }}waterfront/master.m3u8"
+           poster="{{ vid }}waterfront/poster.jpg" muted loop playsinline preload="none"></video>
+    <div class="feature__content wrap">
+      <div class="feature__card reveal">
+        <p class="eyebrow">An extraordinary waterfront setting</p>
+        <h2>One mile of shoreline. Endless possibilities.</h2>
+        <p>
+          The property sits on Lake Wheeler just east of where the Elk River meets the
+          Tennessee — the last mile of undeveloped waterfront on this stretch of the lake,
+          facing one of its widest points.
+        </p>
+        <ul class="ticks">
+          <li>Boating and cruising the Tennessee River</li>
+          <li>Kayaking and paddleboarding along the shoreline</li>
+          <li>Fishing on Lake Wheeler</li>
+          <li>Swimming and watersports, where permitted</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ Marina -->
+  <section class="section">
+    <div class="wrap split split--reverse">
+      <div class="split__text reveal">
+        <p class="eyebrow">A common marina</p>
+        <h2 class="section__title">The heart of the community.</h2>
+        <p>
+          Envision a marina nestled in a naturally protected cove — a gathering place for
+          residents and the everyday gateway to the lake.
+        </p>
+        <ul class="ticks ticks--dark">
+          <li>Common boat ramp</li>
+          <li>Shared dock for residents and guests</li>
+          <li>Individual dry boat storage</li>
+          <li>Landscaped gathering areas overlooking the water</li>
+        </ul>
+        <p class="note">Marina features, capacity and locations are subject to engineering, permitting and regulatory approval.</p>
+      </div>
+      <div class="split__media split__media--video reveal">
+        <video class="js-hls" data-src="{{ vid }}cove/master.m3u8" poster="{{ vid }}cove/poster.jpg"
+               muted loop playsinline preload="none" aria-label="Drone footage of a sheltered cove"></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ Land & legacy -->
+  <section class="feature feature--right" id="land">
+    <video class="js-hls feature__video" data-src="{{ vid }}meadow/master.m3u8"
+           poster="{{ vid }}meadow/poster.jpg" muted loop playsinline preload="none"></video>
+    <div class="feature__content wrap">
+      <div class="feature__card reveal">
+        <p class="eyebrow">A landscape preserved for generations</p>
+        <h2>More than a development. A legacy of land.</h2>
+        <p>
+          For more than 75 years, one family has cared for this property — its mature
+          hardwoods, rolling hills and hidden meadows. The vision carries that forward:
+        </p>
+        <ul class="ticks">
+          <li>Walking trails through mature forest and open fields</li>
+          <li>Common green space and scenic lake overlooks</li>
+          <li>Roads that follow the natural contours of the land</li>
+          <li>Homesites placed to preserve views and trees</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ Seasons (text; footage is summer-only) -->
+  <section class="section section--sand">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <p class="eyebrow">Four seasons on the lake</p>
+        <h2 class="section__title">A beautiful setting all year.</h2>
+        <p class="section__intro">North Alabama's mild climate keeps the outdoors part of everyday life.</p>
+      </div>
+      <div class="grid grid--4">
+        <div class="card reveal"><div class="card__icon">🌱</div><h3>Spring</h3><p>Fresh greenery and flowering trees — ideal for exploring the trails.</p></div>
+        <div class="card reveal"><div class="card__icon">☀️</div><h3>Summer</h3><p>Boating, fishing, kayaking and long evenings on the water.</p></div>
+        <div class="card reveal"><div class="card__icon">🍂</div><h3>Autumn</h3><p>The hardwoods turn, framing the lake in color.</p></div>
+        <div class="card reveal"><div class="card__icon">❄️</div><h3>Winter</h3><p>Quiet mornings and open views across the water.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ Location -->
+  <section class="section" id="location">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <p class="eyebrow">Location</p>
+        <h2 class="section__title">The quiet of the lake. The opportunity of the city.</h2>
+        <p class="section__intro">Davis Road &amp; Snake Road, Limestone County, Alabama.</p>
+      </div>
+      <div class="location">
+        <div class="location__map reveal">
+          <iframe title="Map showing Sadler Farms near Athens and Huntsville, Alabama"
+                  src="https://maps.google.com/maps?q=34.7768,-87.1772&amp;z=10&amp;output=embed"
+                  loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <div class="card reveal">
-          <div class="card__icon">🌲</div>
-          <h3>Timber &amp; Woodland</h3>
-          <p>Mixed hardwood and pine tracts held for conservation and
-             sustainable, long-horizon forestry.</p>
+        <div class="location__facts">
+          <div class="fact reveal">
+            <span class="fact__num">15<small>min</small></span>
+            <div><h3>Athens</h3><p>Historic downtown, shopping, dining — and a new high school.</p></div>
+          </div>
+          <div class="fact reveal">
+            <span class="fact__num">25<small>min</small></span>
+            <div><h3>Huntsville</h3><p>One of the fastest-growing cities in the U.S., a hub for aerospace, defense and technology jobs.</p></div>
+          </div>
+          <div class="fact reveal">
+            <span class="fact__num">2</span>
+            <div><h3>County roads</h3><p>Water and power available along two county roads bordering the property.</p></div>
+          </div>
         </div>
-        <div class="card reveal">
-          <div class="card__icon">🤝</div>
-          <h3>Land Management</h3>
-          <p>A patient, family-oriented approach to owning and caring for
-             Alabama land through the years ahead.</p>
-        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ Gallery -->
+  <section class="section section--dark" id="gallery">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <p class="eyebrow">From the air</p>
+        <h2 class="section__title">Gallery</h2>
+      </div>
+      <div class="gallery">
+        <a class="gallery__item reveal" href="{{ ph }}43-1600.webp">
+          <img src="{{ ph }}43-800.webp" width="800" height="599" alt="Wide pasture sloping toward Lake Wheeler" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}5-1600.webp">
+          <img src="{{ ph }}5-800.webp" width="800" height="599" alt="Forest fingers and meadows along the lake" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}30-1600.webp">
+          <img src="{{ ph }}30-800.webp" width="800" height="599" alt="Heart-shaped meadow hidden in mature forest" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}59-1600.webp">
+          <img src="{{ ph }}59-800.webp" width="800" height="599" alt="Wooded shoreline on a wide stretch of the lake" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}25-1600.webp">
+          <img src="{{ ph }}25-800.webp" width="800" height="599" alt="Boat cruising past the wooded shoreline" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}44-1600.webp">
+          <img src="{{ ph }}44-800.webp" width="800" height="599" alt="Farm pond among open fields" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}7-1600.webp">
+          <img src="{{ ph }}7-800.webp" width="800" height="599" alt="Fields and forest with the lake beyond" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}28-1600.webp">
+          <img src="{{ ph }}28-800.webp" width="800" height="599" alt="Quiet inlet between wooded banks" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}48-1600.webp">
+          <img src="{{ ph }}48-800.webp" width="800" height="599" alt="Open field above the lake" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}61-1600.webp">
+          <img src="{{ ph }}61-800.webp" width="800" height="599" alt="Wooded point on Lake Wheeler" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}53-1600.webp">
+          <img src="{{ ph }}53-800.webp" width="800" height="599" alt="Forest and meadow with lake views" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}13-1600.webp">
+          <img src="{{ ph }}13-800.webp" width="800" height="599" alt="Mature hardwoods along the shoreline" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}27-1600.webp">
+          <img src="{{ ph }}27-800.webp" width="800" height="599" alt="Protected cove off the main lake" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}12-1600.webp">
+          <img src="{{ ph }}12-800.webp" width="800" height="599" alt="Peninsula of mature forest on the water" loading="lazy">
+        </a>
+        <a class="gallery__item reveal" href="{{ ph }}56-1600.webp">
+          <img src="{{ ph }}56-800.webp" width="800" height="599" alt="Pasture and tree lines above the lake" loading="lazy">
+        </a>
       </div>
     </div>
   </section>
 
   <section class="quote">
     <blockquote class="reveal">
-      &ldquo;We don&rsquo;t inherit the land from our ancestors — we borrow it from
-      our children.&rdquo;
-      <cite>Our guiding principle</cite>
+      A legacy of land. A lifetime on the water.
+      <cite>Sadler Farms &middot; Lake Wheeler</cite>
     </blockquote>
   </section>
 
-  {% comment %} Contact section hidden for now — will point to realtor later.
-  <section class="section section--sand contact" id="contact">
+  <section class="disclaimer">
     <div class="wrap wrap--narrow">
-      <div class="section__head reveal">
-        <p class="eyebrow">Get in touch</p>
-        <h2 class="section__title">Contact us</h2>
-      </div>
-      <div class="contact__card reveal">
-        <p class="contact__text">
-          For inquiries regarding Sadler Farms LLC and its properties,
-          we&rsquo;d be glad to hear from you.
-        </p>
-        <p class="contact__email"><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
-        <a class="btn" href="mailto:{{ site.email }}">Send an email</a>
-      </div>
+      <p>
+        Sadler Farms represents a potential residential development opportunity. All site
+        plans, residential quantities, amenities, marina concepts and development features
+        are illustrative and subject to further planning, engineering, governmental approvals
+        and permitting. No final development plan or construction schedule is represented.
+        Travel times are approximate.
+      </p>
     </div>
   </section>
-  {% endcomment %}
 </main>
+
+<div class="lightbox" hidden>
+  <button class="lightbox__close" type="button" aria-label="Close">&times;</button>
+  <img alt="">
+</div>

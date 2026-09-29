@@ -1,8 +1,8 @@
 title: Sadler Farms LLC
-tagline: Land & Farm Parcels in Alabama
+tagline: A New Vision for Lakeside Living
 description: >-
-  Sadler Farms LLC owns and stewards farm and timber land parcels
-  in Alabama. Get in touch for inquiries.
+  Sadler Farms: 300 acres with about a mile of waterfront on Lake Wheeler
+  and the Tennessee River in Limestone County, Alabama.
 url: "https://sadlerfarmsllc.com"
 email: info@sadlerfarmsllc.com
 
@@ -18,3 +18,7 @@ exclude:
   - README.md
   - vendor
   - .github
+  - tools
+  - assets/photos
+  - assets/videos
+  - assets/audio
