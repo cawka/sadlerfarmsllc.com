@@ -159,11 +159,33 @@
   }
 
   // ---------------------------------------------------------- before / after
+  // Pointer events drive dragging (tap or drag anywhere, mouse or touch);
+  // the visually hidden range input keeps it keyboard-accessible.
   document.querySelectorAll('.compare').forEach(function (c) {
     var r = c.querySelector('.compare__range');
-    var set = function () { c.style.setProperty('--pos', r.value + '%'); };
-    r.addEventListener('input', set);
-    set();
+    var set = function (pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      r.value = pct;
+      c.style.setProperty('--pos', pct + '%');
+    };
+    var fromEvent = function (e) {
+      var box = c.getBoundingClientRect();
+      set((e.clientX - box.left) / box.width * 100);
+    };
+    var dragging = false;
+    c.addEventListener('pointerdown', function (e) {
+      if (e.button > 0) return;
+      dragging = true;
+      c.setPointerCapture(e.pointerId);
+      c.classList.add('is-dragging');
+      fromEvent(e);
+    });
+    c.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
+    var end = function () { dragging = false; c.classList.remove('is-dragging'); };
+    c.addEventListener('pointerup', end);
+    c.addEventListener('pointercancel', end);
+    r.addEventListener('input', function () { set(parseFloat(r.value)); });
+    set(parseFloat(r.value));
   });
 
   // ---------------------------------------------------------- reveal on scroll

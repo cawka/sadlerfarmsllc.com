@@ -299,10 +299,15 @@ a { color: var(--green); }
 }
 .compare__tag--before { left: 1rem; }
 .compare__tag--after { right: 1rem; }
-.compare__range {
-  position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize;
-  -webkit-appearance: none; appearance: none; touch-action: pan-y;
+.compare { cursor: ew-resize; touch-action: pan-y; }  /* horizontal drags compare, vertical ones scroll */
+.compare img { pointer-events: none; -webkit-user-drag: none; }
+.compare.is-dragging .compare__handle span { transform: scale(1.08); }
+.compare__handle span { transition: transform .15s ease; }
+.compare__range {  /* keyboard only; visually hidden */
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
+.compare:focus-within .compare__handle span { box-shadow: 0 0 0 3px var(--gold-l), 0 4px 16px rgba(0,0,0,.3); }
 
 /* ---------- Full-bleed video feature ---------- */
 .feature { position: relative; min-height: 88vh; display: flex; align-items: center; overflow: hidden; color: #fff; background: var(--green-d); }
