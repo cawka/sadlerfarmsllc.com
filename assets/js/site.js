@@ -161,7 +161,7 @@
   // ---------------------------------------------------------- before / after
   // Pointer events drive dragging (tap or drag anywhere, mouse or touch);
   // the visually hidden range input keeps it keyboard-accessible.
-  document.querySelectorAll('.compare').forEach(function (c) {
+  function initCompare(c) {
     var r = c.querySelector('.compare__range');
     var set = function (pct) {
       pct = Math.max(0, Math.min(100, pct));
@@ -177,7 +177,7 @@
     };
     var dragging = false;
     c.addEventListener('pointerdown', function (e) {
-      if (e.button > 0) return;
+      if (e.button > 0 || e.target.closest('.compare__expand')) return;
       dragging = true;
       c.setPointerCapture(e.pointerId);
       c.classList.add('is-dragging');
@@ -189,7 +189,46 @@
     c.addEventListener('pointercancel', end);
     r.addEventListener('input', function () { set(parseFloat(r.value)); });
     set(parseFloat(r.value));
-  });
+  }
+  document.querySelectorAll('.compare').forEach(initCompare);
+
+  // Expand: open a card's slider large in an overlay, with the bigger images.
+  var modal = document.querySelector('.compare-modal');
+  if (modal) {
+    var body = modal.querySelector('.compare-modal__body');
+    var lastFocus = null;
+    var closeModal = function () {
+      modal.hidden = true;
+      body.innerHTML = '';
+      document.documentElement.classList.remove('no-scroll');
+      if (lastFocus) lastFocus.focus();
+    };
+    document.querySelectorAll('.compare__expand').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var src = btn.closest('.compare');
+        var big = src.cloneNode(true);
+        big.className = 'compare compare--modal';
+        big.removeAttribute('data-before-large');
+        big.removeAttribute('data-after-large');
+        var imgs = big.querySelectorAll('.compare__img');
+        imgs[0].src = src.dataset.beforeLarge;
+        imgs[1].src = src.dataset.afterLarge;
+        imgs.forEach(function (i) { i.loading = 'eager'; });
+        var ex = big.querySelector('.compare__expand');
+        if (ex) ex.remove();
+        big.querySelector('.compare__range').value = 50;
+        body.appendChild(big);
+        initCompare(big);
+        lastFocus = btn;
+        modal.hidden = false;
+        document.documentElement.classList.add('no-scroll');
+        modal.querySelector('.compare-modal__close').focus();
+      });
+    });
+    modal.querySelector('.compare-modal__close').addEventListener('click', closeModal);
+    modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+  }
 
   // ---------------------------------------------------------- reveal on scroll
   var els = document.querySelectorAll('.reveal');

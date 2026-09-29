@@ -135,27 +135,27 @@ video:
       </div>
       <div class="grid grid--3">
         <article class="tile reveal">
-          {% capture before %}{{ ph }}22-800.webp{% endcapture %}{% capture after %}{{ cx }}marina-800.webp{% endcapture %}
+          {% capture before %}{{ ph }}22-800.webp{% endcapture %}{% capture after %}{{ cx }}marina-800.webp{% endcapture %}{% capture before_l %}{{ ph }}22-1600.webp{% endcapture %}{% capture after_l %}{{ cx }}marina-1440.webp{% endcapture %}
           {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="A sheltered cove on Lake Wheeler today"
-             after=after after_w="800" after_h="599" after_alt="Artist's concept: townhomes and a small marina in the cove" %}
+             before_large=before_l after_large=after_l after=after after_w="800" after_h="599" after_alt="Artist's concept: townhomes and a small marina in the cove" %}
           <div class="tile__body">
             <h3>Marina Townhomes</h3>
             <p>Two-story, two-bedroom townhomes around a protected cove, looking out over the boats and the water.</p>
           </div>
         </article>
         <article class="tile reveal">
-          {% capture before %}{{ ph }}62-800.webp{% endcapture %}{% capture after %}{{ cx }}estates-800.webp{% endcapture %}
+          {% capture before %}{{ ph }}62-800.webp{% endcapture %}{% capture after %}{{ cx }}estates-800.webp{% endcapture %}{% capture before_l %}{{ ph }}62-1600.webp{% endcapture %}{% capture after_l %}{{ cx }}estates-1440.webp{% endcapture %}
           {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="Wooded shoreline along the wide lake today"
-             after=after after_w="800" after_h="599" after_alt="Artist's concept: estate homes with private docks along the shoreline" %}
+             before_large=before_l after_large=after_l after=after after_w="800" after_h="599" after_alt="Artist's concept: estate homes with private docks along the shoreline" %}
           <div class="tile__body">
             <h3>Waterfront Estates</h3>
             <p>Private one-acre homesites along about a mile of shoreline, with direct views across the widest part of the lake.</p>
           </div>
         </article>
         <article class="tile reveal">
-          {% capture before %}{{ ph }}42-800.webp{% endcapture %}{% capture after %}{{ cx }}nature-800.webp{% endcapture %}
+          {% capture before %}{{ ph }}42-800.webp{% endcapture %}{% capture after %}{{ cx }}nature-800.webp{% endcapture %}{% capture before_l %}{{ ph }}42-1600.webp{% endcapture %}{% capture after_l %}{{ cx }}nature-1440.webp{% endcapture %}
           {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="Rolling pasture framed by mature trees today"
-             after=after after_w="800" after_h="599" after_alt="Artist's concept: farmhouse-style homes around an open meadow" %}
+             before_large=before_l after_large=after_l after=after after_w="800" after_h="599" after_alt="Artist's concept: farmhouse-style homes around an open meadow" %}
           <div class="tile__body">
             <h3>Homes Within Nature</h3>
             <p>Residences set into the rolling hills, forest edges and open fields, linked by green space and walking trails.</p>
@@ -344,6 +344,11 @@ video:
     </div>
   </section>
 </main>
+
+<div class="compare-modal" hidden role="dialog" aria-modal="true" aria-label="Artist's concept, larger view">
+  <button class="compare-modal__close" type="button" aria-label="Close">&times;</button>
+  <div class="compare-modal__body"></div>
+</div>
 
 <div class="lightbox" hidden>
   <button class="lightbox__close" type="button" aria-label="Close">&times;</button>
