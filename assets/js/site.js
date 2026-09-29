@@ -122,6 +122,20 @@
     syncSound();
   }
 
+  // ---------------------------------------------------------- mobile menu
+  var nav = document.querySelector('.nav');
+  var toggle = nav && nav.querySelector('.nav__toggle');
+  if (toggle) {
+    var setOpen = function (open) {
+      nav.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', open);
+    };
+    toggle.addEventListener('click', function (e) { e.stopPropagation(); setOpen(!nav.classList.contains('is-open')); });
+    nav.querySelectorAll('.nav__links a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+    document.addEventListener('click', function (e) { if (!nav.contains(e.target)) setOpen(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+  }
+
   // ---------------------------------------------------------- reveal on scroll
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
