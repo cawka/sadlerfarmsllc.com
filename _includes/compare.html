@@ -1,0 +1,16 @@
+{% comment %}
+  Before/after slider (driven by assets/js/site.js).
+  Params: before, before_w, before_h, before_alt, after, after_w, after_h, after_alt, class (optional)
+{% endcomment %}
+<div class="compare {{ include.class }}" style="--pos: 50%">
+  <img class="compare__img" src="{{ include.before }}" width="{{ include.before_w }}" height="{{ include.before_h }}"
+       alt="{{ include.before_alt }}" loading="lazy" draggable="false">
+  <div class="compare__after">
+    <img class="compare__img" src="{{ include.after }}" width="{{ include.after_w }}" height="{{ include.after_h }}"
+         alt="{{ include.after_alt }}" loading="lazy" draggable="false">
+  </div>
+  <div class="compare__handle" aria-hidden="true"><span></span></div>
+  <span class="compare__tag compare__tag--before">Today</span>
+  <span class="compare__tag compare__tag--after">Artist&rsquo;s concept</span>
+  <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Compare today with the artist's concept">
+</div>
