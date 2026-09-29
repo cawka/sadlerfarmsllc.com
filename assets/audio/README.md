@@ -1,8 +1,9 @@
 # Film soundtrack
 
 `film.m4a` is the audio track muxed into the hero film by `tools/build-media.sh`:
-the narration (`narration.txt`) mixed over the music (`music.m4a`), with the
-music ducked automatically under the voice.
+the narration (`narration.txt`) mixed over the music (`music.m4a`). The music is
+compressed to an even level and sits at a fixed volume under the voice (no
+ducking, so it never swells up between lines).
 
 ## Music (`music.m4a`)
 
@@ -22,12 +23,13 @@ The narration is an AI voice ("am_onyx" from Kokoro TTS v1.0, an open-source,
 Apache-2.0 model). `narration.txt` has the lines and their start times. For a
 human voice-over, record the same lines, then mix them over the music:
 
-    ffmpeg -i music.m4a -i vo0.wav ... -i vo4.wav -filter_complex "
-      [1]aresample=48000,adelay=2000|2000[a1]; ... (one adelay per line, in ms) ...
-      [a1]...[a5]amix=inputs=5:normalize=0,pan=stereo|c0=c0|c1=c0,highpass=f=70,
-        acompressor=threshold=-18dB:ratio=3,volume=1.6,apad=whole_dur=78,asplit=2[vo][sc];
-      [0][sc]sidechaincompress=threshold=0.03:ratio=8:attack=40:release=600[duck];
-      [duck][vo]amix=inputs=2:normalize=0,alimiter=limit=0.95,atrim=0:78" \
+    ffmpeg -i music.m4a -i vo0.wav ... -i vo8.wav -filter_complex "
+      [1]aresample=48000,adelay=1200|1200[a1]; ... (one adelay per line, in ms) ...
+      [a1]...[a9]amix=inputs=9:normalize=0,pan=stereo|c0=c0|c1=c0,highpass=f=70,
+        acompressor=threshold=-18dB:ratio=3,volume=1.6,apad=whole_dur=78[vo];
+      [0]acompressor=threshold=0.015:ratio=10:attack=300:release=3000:knee=6,
+        volume=3.2,afade=t=out:st=75:d=3[mus];
+      [mus][vo]amix=inputs=2:normalize=0,alimiter=limit=0.95,atrim=0:78" \
       -c:a aac -b:a 192k film.m4a
 
 then run `tools/build-media.sh film`.
