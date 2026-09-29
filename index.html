@@ -60,6 +60,25 @@ video:
   </button>
   <div class="hero__progress" aria-hidden="true"><span></span></div>
 
+  <!-- Secret soundtrack picker: tap the logo 5 times, or open /?soundtrack=<id>.
+       Order must match SOUNDTRACKS in tools/build-media.sh. -->
+  <script type="application/json" id="soundtracks">
+    [
+      {"id": "mood", "label": "Morning Mood",
+       "credit": "Film music: Grieg, &ldquo;Morning Mood&rdquo; &mdash; Musopen Symphony (public domain) &middot; Narration: AI voice"},
+      {"id": "fireflies", "label": "Fireflies and Stardust",
+       "credit": "Film music: &ldquo;Fireflies and Stardust&rdquo; Kevin MacLeod (<a href=\"https://incompetech.com\">incompetech.com</a>), licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a> &middot; Narration: AI voice"},
+      {"id": "bama", "label": "Bama Country",
+       "credit": "Film music: &ldquo;Bama Country&rdquo; Kevin MacLeod (<a href=\"https://incompetech.com\">incompetech.com</a>), licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a> &middot; Narration: AI voice"},
+      {"id": "cattails", "label": "Cattails",
+       "credit": "Film music: &ldquo;Cattails&rdquo; Kevin MacLeod (<a href=\"https://incompetech.com\">incompetech.com</a>), licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a> &middot; Narration: AI voice"}
+    ]
+  </script>
+  <div class="soundtrack-picker" hidden>
+    <p class="soundtrack-picker__title">Soundtrack</p>
+    <div class="soundtrack-picker__list"></div>
+  </div>
+
   <div class="player-bar" data-for=".hero__video">
     <button class="player-bar__sound js-sound" type="button" aria-pressed="false">
       <svg class="icon-off" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 9v6h4l5 5V4L7 9H3zm13.6 3 2.7-2.7-1.4-1.4-2.7 2.7-2.7-2.7-1.4 1.4 2.7 2.7-2.7 2.7 1.4 1.4 2.7-2.7 2.7 2.7 1.4-1.4z"/></svg>

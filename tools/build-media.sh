@@ -131,16 +131,53 @@ build_film() {
   done
   fc+="[$prev]fade=t=in:st=0:d=1.5,fade=t=out:st=$((total - 2)):d=2[vout]"
 
-  # Soundtrack: narration mixed over the opening of Grieg's "Morning Mood" (Musopen Symphony, public
-  # domain), cut to the film's length -- see assets/audio/README.md. Swap in the
-  # narration + music mix by replacing assets/audio/film.m4a.
-  local aud_in=(-i assets/audio/film.m4a)
-  local af="[$i:a]atrim=0:$total,afade=t=out:st=$((total - 3)):d=3,loudnorm=I=-18:linear=true[aout]"
+  # Video only; the soundtracks are separate, switchable HLS audio renditions.
+  ffmpeg -v error -y "${inputs[@]}" -filter_complex "$fc" -map "[vout]" -an \
+    -c:v libx264 -crf 16 -preset slow "$TMP/film.mp4"
+  hls_alt_audio "$TMP/film.mp4" "$OUT/video/film" "$total"
+}
 
-  ffmpeg -v error -y "${inputs[@]}" "${aud_in[@]}" \
-    -filter_complex "$fc;$af" -map "[vout]" -map "[aout]" \
-    -c:v libx264 -crf 16 -preset slow -c:a aac -b:a 192k "$TMP/film.mp4"
-  hls "$TMP/film.mp4" "$OUT/video/film" 1
+# Film soundtracks: narration mixed over a music bed (see assets/audio/README.md).
+# id|label; the first one is the default. Files: assets/audio/soundtracks/<id>.m4a
+SOUNDTRACKS=(
+  "mood|Morning Mood"
+  "fireflies|Fireflies and Stardust"
+  "bama|Bama Country"
+  "cattails|Cattails"
+)
+
+# hls_alt_audio <video.mp4> <outdir> <seconds>: the LADDER video renditions plus
+# one audio rendition per soundtrack, all in a single audio group, so players
+# can switch soundtracks without reloading video.
+hls_alt_audio() {
+  local in=$1 dir=$2 total=$3
+  rm -rf "$dir"; mkdir -p "$dir"
+  local n=${#LADDER[@]} ins=(-i "$in") fc maps=() vsm=() i k=1
+  fc="[0:v]split=$n"
+  for i in $(seq 0 $((n - 1))); do fc+="[v$i]"; done
+  for i in $(seq 0 $((n - 1))); do
+    read -r h w br <<<"${LADDER[$i]}"
+    fc+=";[v$i]scale=$w:$h:flags=lanczos[o$i]"
+    maps+=(-map "[o$i]" -c:v:$i libx264 -profile:v:$i high -preset:v:$i slow
+           -b:v:$i "$br" -maxrate:v:$i "$br" -bufsize:v:$i "$br")
+    vsm+=("v:$i,agroup:aud,name:${h}p")
+  done
+  for i in "${!SOUNDTRACKS[@]}"; do
+    local id=${SOUNDTRACKS[$i]%%|*}
+    ins+=(-i "assets/audio/soundtracks/$id.m4a")
+    fc+=";[$k:a]atrim=0:$total,loudnorm=I=-18:linear=true,aresample=48000[a$i]"
+    maps+=(-map "[a$i]")
+    local def=""; [[ $i == 0 ]] && def=",default:yes"
+    vsm+=("a:$i,agroup:aud,name:$id,language:en$def")
+    k=$((k + 1))
+  done
+  ffmpeg -v error -y "${ins[@]}" -filter_complex "$fc" "${maps[@]}" \
+    -c:a aac -b:a 128k -ac 2 \
+    -r 30 -g 60 -keyint_min 60 -sc_threshold 0 -pix_fmt yuv420p \
+    -f hls -hls_time 4 -hls_playlist_type vod -hls_segment_type mpegts \
+    -hls_segment_filename "$dir/%v/seg%03d.ts" -master_pl_name master.m3u8 \
+    -var_stream_map "${vsm[*]}" "$dir/%v/index.m3u8"
+  ffmpeg -v error -y -ss 1 -i "$in" -frames:v 1 -vf scale=1280:-2 -q:v 4 "$dir/poster.jpg"
 }
 
 # ---------------------------------------------------------------- loops

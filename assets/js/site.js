@@ -144,6 +144,61 @@
     syncSound();
   }
 
+  // ---------------------------------------------------------- soundtracks
+  // The film carries several alternate audio renditions (same narration, different
+  // music). A hidden picker switches between them: tap the logo mark 5 times, or
+  // open the page with ?soundtrack=<id>. The footer music credit follows along.
+  (function () {
+    var data = document.getElementById('soundtracks');
+    var picker = document.querySelector('.soundtrack-picker');
+    if (!data || !picker || !film) return;
+    var tracks = JSON.parse(data.textContent);
+    var list = picker.querySelector('.soundtrack-picker__list');
+    var credit = document.querySelector('.site-footer__credit');
+    var current = 0;
+
+    function apply(i) {
+      current = i;
+      var hls = film._hls;
+      if (hls && hls.audioTracks && hls.audioTracks.length > i) hls.audioTrack = i;
+      else if (film.audioTracks && film.audioTracks.length > i) {  // native HLS (Safari)
+        for (var k = 0; k < film.audioTracks.length; k++) film.audioTracks[k].enabled = (k === i);
+      }
+      if (credit) credit.innerHTML = tracks[i].credit;
+      list.querySelectorAll('button').forEach(function (b, k) { b.setAttribute('aria-pressed', k === i); });
+    }
+    tracks.forEach(function (t, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.textContent = t.label;
+      b.addEventListener('click', function () {
+        apply(i);
+        try { localStorage.setItem('sf-soundtrack', t.id); } catch (e) {}
+      });
+      list.appendChild(b);
+    });
+
+    var wanted = new URLSearchParams(location.search).get('soundtrack');
+    if (!wanted) { try { wanted = localStorage.getItem('sf-soundtrack'); } catch (e) {} }
+    var start = Math.max(0, tracks.findIndex(function (t) { return t.id === wanted; }));
+    apply(start);
+    if (film._hls) {
+      film._hls.on(Hls.Events.AUDIO_TRACKS_UPDATED, function () { apply(current); });
+    } else {
+      film.addEventListener('loadedmetadata', function () { apply(current); });
+    }
+
+    var mark = document.querySelector('.nav__mark');
+    var taps = 0, timer = null;
+    if (mark) mark.addEventListener('click', function (e) {
+      e.preventDefault();
+      taps++;
+      clearTimeout(timer);
+      timer = setTimeout(function () { taps = 0; }, 1500);
+      if (taps >= 5) { taps = 0; picker.hidden = !picker.hidden; }
+    });
+  })();
+
   // ---------------------------------------------------------- mobile menu
   var nav = document.querySelector('.nav');
   var toggle = nav && nav.querySelector('.nav__toggle');

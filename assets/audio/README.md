@@ -1,11 +1,27 @@
 # Film soundtrack
 
-`film.m4a` is the audio track muxed into the hero film by `tools/build-media.sh`:
-the narration (`narration.txt`) mixed over the music (`music.m4a`). The music is
-compressed to an even level and sits at a fixed volume under the voice (no
-ducking, so it never swells up between lines).
+The film's soundtracks live in `soundtracks/<id>.m4a`: the same narration
+(`narration.txt`) mixed over different music. `tools/build-media.sh film`
+packages them as alternate HLS audio renditions of one video (order and labels
+in `SOUNDTRACKS` there), so the site can switch music without reloading video.
+The first one is the default.
 
-## Music (`music.m4a`)
+On the site, a hidden picker switches soundtracks: tap the logo mark 5 times,
+or open the page with `?soundtrack=<id>`. The footer credit follows the choice
+(the list and credits are in the `#soundtracks` JSON in `index.html`).
+
+| id | Music | License |
+|----|-------|---------|
+| `mood` | Grieg, "Morning Mood", Musopen Symphony | Public domain |
+| `fireflies` | "Fireflies and Stardust", Kevin MacLeod (incompetech.com) | CC BY 4.0 (credit required) |
+| `bama` | "Bama Country", Kevin MacLeod (incompetech.com) | CC BY 4.0 (credit required) |
+| `cattails` | "Cattails", Kevin MacLeod (incompetech.com) | CC BY 4.0 (credit required) |
+
+The Kevin MacLeod beds are the track's first 56 s crossfaded (2 s) into its
+last 26 s, so the real ending lands as the film fades out. Music sources are
+kept locally in `source/` (gitignored).
+
+## Morning Mood bed (`music.m4a`)
 
 The opening (0:00–1:18) of **Edvard Grieg, "Morning Mood"** from
 *Peer Gynt Suite No. 1, Op. 46*, performed by the **Musopen Symphony**.

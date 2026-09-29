@@ -211,6 +211,22 @@ a { color: var(--green); }
 .hero__progress span { display: block; height: 100%; background: var(--gold-l); transform-origin: left; transform: scaleX(0); }
 .hero.is-watching .player-bar__sound { animation: none; }
 
+.soundtrack-picker {
+  position: absolute; z-index: 5; left: 1.5rem; bottom: 5rem;
+  background: rgba(20,30,18,.88); border: 1px solid rgba(255,255,255,.2); border-radius: 14px;
+  padding: .8rem; min-width: 220px; box-shadow: 0 20px 40px -12px rgba(0,0,0,.5);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+.soundtrack-picker[hidden] { display: none; }
+.soundtrack-picker__title { margin: 0 0 .5rem; font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: var(--gold-l); }
+.soundtrack-picker__list { display: flex; flex-direction: column; gap: .3rem; }
+.soundtrack-picker button {
+  font: inherit; font-size: .95rem; text-align: left; color: #fff; cursor: pointer;
+  background: transparent; border: 1px solid transparent; border-radius: 9px; padding: .5rem .7rem;
+}
+.soundtrack-picker button:hover { background: rgba(255,255,255,.08); }
+.soundtrack-picker button[aria-pressed="true"] { border-color: var(--gold-l); color: var(--gold-l); }
+
 .player-bar {
   position: absolute; z-index: 3; right: 1.5rem; bottom: 1.5rem;
   display: flex; align-items: center; gap: .5rem;
