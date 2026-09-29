@@ -118,7 +118,7 @@ video:
       </div>
       <div class="reveal">
         {% capture before %}{{ ph }}41-1600.webp{% endcapture %}{% capture after %}{{ cx }}overview-1440.webp{% endcapture %}
-        {% include compare.html before=before before_w="1600" before_h="1198" before_alt="Sadler Farms today: pasture, forest and Lake Wheeler"
+        {% include compare.html start="40" before=before before_w="1600" before_h="1198" before_alt="Sadler Farms today: pasture, forest and Lake Wheeler"
            after=after after_w="1449" after_h="1085" after_alt="Artist's concept: homes, a marina and trails set into the same landscape" %}
       </div>
     </div>
@@ -130,12 +130,12 @@ video:
       <div class="section__head reveal">
         <p class="eyebrow">A diversity of residences</p>
         <h2 class="section__title">Homes shaped by the setting.</h2>
-        <p class="section__intro">Three ways to live on the land — each placed where the landscape suits it best. Drag each image to compare today with the concept.</p>
+        <p class="section__intro">Three ways to live on the land — each placed where the landscape suits it best. Drag any image to see the land as it is today.</p>
       </div>
       <div class="grid grid--3">
         <article class="tile reveal">
           {% capture before %}{{ ph }}22-800.webp{% endcapture %}{% capture after %}{{ cx }}marina-800.webp{% endcapture %}
-          {% include compare.html class="compare--card" before=before before_w="800" before_h="599" before_alt="A sheltered cove on Lake Wheeler today"
+          {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="A sheltered cove on Lake Wheeler today"
              after=after after_w="800" after_h="599" after_alt="Artist's concept: townhomes and a small marina in the cove" %}
           <div class="tile__body">
             <h3>Marina Townhomes</h3>
@@ -144,7 +144,7 @@ video:
         </article>
         <article class="tile reveal">
           {% capture before %}{{ ph }}62-800.webp{% endcapture %}{% capture after %}{{ cx }}estates-800.webp{% endcapture %}
-          {% include compare.html class="compare--card" before=before before_w="800" before_h="599" before_alt="Wooded shoreline along the wide lake today"
+          {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="Wooded shoreline along the wide lake today"
              after=after after_w="800" after_h="599" after_alt="Artist's concept: estate homes with private docks along the shoreline" %}
           <div class="tile__body">
             <h3>Waterfront Estates</h3>
@@ -153,7 +153,7 @@ video:
         </article>
         <article class="tile reveal">
           {% capture before %}{{ ph }}42-800.webp{% endcapture %}{% capture after %}{{ cx }}nature-800.webp{% endcapture %}
-          {% include compare.html class="compare--card" before=before before_w="800" before_h="599" before_alt="Rolling pasture framed by mature trees today"
+          {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="Rolling pasture framed by mature trees today"
              after=after after_w="800" after_h="599" after_alt="Artist's concept: farmhouse-style homes around an open meadow" %}
           <div class="tile__body">
             <h3>Homes Within Nature</h3>

@@ -167,6 +167,9 @@
       pct = Math.max(0, Math.min(100, pct));
       r.value = pct;
       c.style.setProperty('--pos', pct + '%');
+      // Hide a side's label when that side is too narrow to hold it.
+      c.classList.toggle('hide-before', pct < 20);
+      c.classList.toggle('hide-after', pct > 80);
     };
     var fromEvent = function (e) {
       var box = c.getBoundingClientRect();
