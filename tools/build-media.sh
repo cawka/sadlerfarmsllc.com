@@ -3,7 +3,7 @@
 #   assets/photos/*.jpg  -> assets/media/photos/<n>-{800,1600}.webp
 #   assets/videos/*.mp4  -> assets/media/video/<name>/ (HLS ladder + poster)
 #
-# Usage: tools/build-media.sh [photos|film|loops|all]
+# Usage: tools/build-media.sh [photos|concepts|film|loops|all]
 #
 # Sizes are deliberately small while we're on GitHub Pages. To raise the
 # ceiling later, add rungs to LADDER (e.g. "1080 1920 5000k").
@@ -50,6 +50,18 @@ build_photos() {
   done
   # Social/OG image (JPEG for crawler compatibility)
   magick "$SRC_PHOTOS/SadlerFarms_083026_AerialPhoto (41).jpg" -resize 1600x -strip -quality 78 assets/img/hero.jpg
+}
+
+# ---------------------------------------------------------------- concepts
+# Artist's-concept images (made in ChatGPT from our photos 41, 42, 62, 22).
+# Sources live in assets/concepts/ (committed, excluded from the site build).
+build_concepts() {
+  mkdir -p "$OUT/concepts"
+  for src in assets/concepts/*.png; do
+    n=$(basename "$src" .png)
+    magick "$src" -resize 800x -strip -quality 74 "$OUT/concepts/$n-800.webp"
+    magick "$src" -strip -quality 74 "$OUT/concepts/$n-1440.webp"
+  done
 }
 
 # ---------------------------------------------------------------- HLS
@@ -153,9 +165,10 @@ build_loops() {
 
 case ${1:-all} in
   photos) build_photos ;;
+  concepts) build_concepts ;;
   film)   build_film ;;
   loops)  build_loops ;;
-  all)    build_photos; build_film; build_loops ;;
-  *) echo "usage: $0 [photos|film|loops|all]" >&2; exit 1 ;;
+  all)    build_photos; build_concepts; build_film; build_loops ;;
+  *) echo "usage: $0 [photos|concepts|film|loops|all]" >&2; exit 1 ;;
 esac
 du -sh "$OUT"

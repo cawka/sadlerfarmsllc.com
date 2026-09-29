@@ -15,6 +15,7 @@ video:
 ---
 {% assign ph = '/assets/media/photos/' | relative_url %}
 {% assign vid = '/assets/media/video/' | relative_url %}
+{% assign cx = '/assets/media/concepts/' | relative_url %}
 
 <header class="hero hero--video" id="top">
   <div class="hero__media">
@@ -107,6 +108,29 @@ video:
     </div>
   </section>
 
+  <!-- ============================================================ Before / after -->
+  <section class="section section--tight">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <p class="eyebrow">Today &amp; tomorrow</p>
+        <h2 class="section__title">Picture the vision.</h2>
+        <p class="section__intro">Drag the slider to compare the land as it is today with an artist&rsquo;s concept of what it could become.</p>
+      </div>
+      <div class="compare reveal" style="--pos: 50%">
+        <img class="compare__img" src="{{ ph }}41-1600.webp" width="1600" height="1198"
+             alt="Sadler Farms today: pasture, forest and Lake Wheeler" loading="lazy">
+        <div class="compare__after">
+          <img class="compare__img" src="{{ cx }}overview-1440.webp" width="1449" height="1085"
+               alt="Artist's concept: homes, a marina and trails set into the same landscape" loading="lazy">
+        </div>
+        <div class="compare__handle" aria-hidden="true"><span></span></div>
+        <span class="compare__tag compare__tag--before">Today</span>
+        <span class="compare__tag compare__tag--after">Artist&rsquo;s concept</span>
+        <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Compare today with the artist's concept">
+      </div>
+    </div>
+  </section>
+
   <!-- ============================================================ Residences -->
   <section class="section section--sand">
     <div class="wrap">
@@ -117,28 +141,28 @@ video:
       </div>
       <div class="grid grid--3">
         <article class="tile reveal">
-          <img src="{{ ph }}22-800.webp" width="800" height="599" alt="A sheltered cove on Lake Wheeler" loading="lazy">
+          <div class="tile__media"><img src="{{ cx }}marina-800.webp" width="800" height="599" alt="Artist’s concept: townhomes and a small marina in the cove" loading="lazy"><span class="badge">Artist&rsquo;s concept</span></div>
           <div class="tile__body">
             <h3>Marina Townhomes</h3>
             <p>Two-story, two-bedroom townhomes around a protected cove, looking out over the boats and the water.</p>
           </div>
         </article>
         <article class="tile reveal">
-          <img src="{{ ph }}62-800.webp" width="800" height="599" alt="Wooded shoreline along the wide lake" loading="lazy">
+          <div class="tile__media"><img src="{{ cx }}estates-800.webp" width="800" height="599" alt="Artist’s concept: estate homes with private docks along the shoreline" loading="lazy"><span class="badge">Artist&rsquo;s concept</span></div>
           <div class="tile__body">
             <h3>Waterfront Estates</h3>
             <p>Private one-acre homesites along about a mile of shoreline, with direct views across the widest part of the lake.</p>
           </div>
         </article>
         <article class="tile reveal">
-          <img src="{{ ph }}42-800.webp" width="800" height="599" alt="Rolling pasture framed by mature trees" loading="lazy">
+          <div class="tile__media"><img src="{{ cx }}nature-800.webp" width="800" height="599" alt="Artist’s concept: farmhouse-style homes around an open meadow" loading="lazy"><span class="badge">Artist&rsquo;s concept</span></div>
           <div class="tile__body">
             <h3>Homes Within Nature</h3>
             <p>Residences set into the rolling hills, forest edges and open fields, linked by green space and walking trails.</p>
           </div>
         </article>
       </div>
-      <p class="note note--center">Photos show the existing land. Residential types, locations and quantities would be set through the development planning process.</p>
+      <p class="note note--center">Artist&rsquo;s concepts based on drone photos of the property. Residential types, locations and quantities would be set through the development planning process.</p>
     </div>
   </section>
 
@@ -208,23 +232,6 @@ video:
           <li>Roads that follow the natural contours of the land</li>
           <li>Homesites placed to preserve views and trees</li>
         </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================ Seasons (text; footage is summer-only) -->
-  <section class="section section--sand">
-    <div class="wrap">
-      <div class="section__head reveal">
-        <p class="eyebrow">Four seasons on the lake</p>
-        <h2 class="section__title">A beautiful setting all year.</h2>
-        <p class="section__intro">North Alabama's mild climate keeps the outdoors part of everyday life.</p>
-      </div>
-      <div class="grid grid--4">
-        <div class="card reveal"><div class="card__icon">🌱</div><h3>Spring</h3><p>Fresh greenery and flowering trees — ideal for exploring the trails.</p></div>
-        <div class="card reveal"><div class="card__icon">☀️</div><h3>Summer</h3><p>Boating, fishing, kayaking and long evenings on the water.</p></div>
-        <div class="card reveal"><div class="card__icon">🍂</div><h3>Autumn</h3><p>The hardwoods turn, framing the lake in color.</p></div>
-        <div class="card reveal"><div class="card__icon">❄️</div><h3>Winter</h3><p>Quiet mornings and open views across the water.</p></div>
       </div>
     </div>
   </section>

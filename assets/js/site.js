@@ -158,6 +158,14 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
   }
 
+  // ---------------------------------------------------------- before / after
+  document.querySelectorAll('.compare').forEach(function (c) {
+    var r = c.querySelector('.compare__range');
+    var set = function () { c.style.setProperty('--pos', r.value + '%'); };
+    r.addEventListener('input', set);
+    set();
+  });
+
   // ---------------------------------------------------------- reveal on scroll
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
