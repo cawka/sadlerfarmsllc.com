@@ -119,7 +119,7 @@ build_film() {
   done
   fc+="[$prev]fade=t=in:st=0:d=1.5,fade=t=out:st=$((total - 2)):d=2[vout]"
 
-  # Soundtrack: opening of Grieg's "Morning Mood" (Musopen Symphony, public
+  # Soundtrack: narration mixed over the opening of Grieg's "Morning Mood" (Musopen Symphony, public
   # domain), cut to the film's length -- see assets/audio/README.md. Swap in the
   # narration + music mix by replacing assets/audio/film.m4a.
   local aud_in=(-i assets/audio/film.m4a)

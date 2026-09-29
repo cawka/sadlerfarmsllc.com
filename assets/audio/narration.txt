@@ -1,0 +1,7 @@
+# Film narration: AI voice "am_onyx" from Kokoro TTS v1.0 (Apache-2.0), speed 0.9.
+# Start times are relative to the start of the film (78 s long).
+0:02.0  Along the Tennessee River, on the wide waters of Lake Wheeler, lies a remarkable place... three hundred acres of rolling hills, mature forest, and open fields.
+0:14.0  For more than seventy-five years, one family has cared for this land, and nearly a mile of untouched shoreline.
+0:26.5  Now, it holds a new vision. A lakeside community of townhomes around a sheltered marina, and estate homes along the water, designed around the land, rather than over it.
+0:52.0  Just fifteen minutes from Athens. Twenty-five from Huntsville. Close to opportunity, and a world apart.
+1:10.5  Sadler Farms. A new vision for lakeside living.
