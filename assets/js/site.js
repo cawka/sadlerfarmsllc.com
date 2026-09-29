@@ -71,17 +71,39 @@
       syncSound();
     });
 
-    document.querySelectorAll('.js-watch').forEach(function (b) {
-      b.addEventListener('click', function () {
-        film.currentTime = 0;
-        film.muted = false;
-        film.loop = false;
-        tryPlay(film);
-        syncSound();
-        requestFs();
-      });
+    // "Watch the film" plays in place: the hero clears its text, the film
+    // restarts with sound, and Close (or the end of the film) restores it.
+    var progress = hero.querySelector('.hero__progress span');
+    function watch() {
+      hero.classList.add('is-watching');
+      hero.scrollIntoView({ behavior: 'smooth' });
+      film.currentTime = 0;
+      film.muted = false;
+      film.loop = false;
+      tryPlay(film);
+      syncSound();
+    }
+    function stopWatching() {
+      hero.classList.remove('is-watching');
+      film.loop = true;
+      film.muted = true;
+      syncSound();
+      tryPlay(film);
+    }
+    document.querySelectorAll('.js-watch').forEach(function (b) { b.addEventListener('click', watch); });
+    hero.querySelector('.js-close-film').addEventListener('click', stopWatching);
+    film.addEventListener('ended', stopWatching);
+    film.addEventListener('timeupdate', function () {
+      if (film.duration) progress.style.transform = 'scaleX(' + (film.currentTime / film.duration) + ')';
     });
-    film.addEventListener('ended', function () { film.loop = true; film.muted = true; syncSound(); tryPlay(film); });
+    // Tapping the film while watching toggles pause.
+    film.addEventListener('click', function () {
+      if (!hero.classList.contains('is-watching')) return;
+      if (film.paused) tryPlay(film); else film.pause();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && hero.classList.contains('is-watching') && !document.fullscreenElement) stopWatching();
+    });
 
     function requestFs() {
       var el = film;
