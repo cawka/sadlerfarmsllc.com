@@ -1,0 +1,37 @@
+{
+  "voice": "am_onyx",
+  "engine": "Kokoro TTS v1.0 (kokoro-onnx), Apache-2.0",
+  "film_seconds": 78,
+  "clips": [
+    {"file": "01.flac", "start": 4.300, "gain": 1.0, "speed": 0.86,
+     "text": "Some places you simply pass by. Others stay with you, long after you've gone."},
+    {"file": "02.flac", "start": 9.549, "gain": 1.0, "speed": 0.86,
+     "text": "For three generations, one family has looked after this bend of the Tennessee River, letting the hardwoods grow tall, and keeping the shoreline just as they found it."},
+    {"file": "03.flac", "start": 19.439, "gain": 1.0, "speed": 0.86,
+     "text": "Here, the fields roll gently down to the water, and every path seems to end with a view of the lake."},
+    {"file": "04.flac", "start": 25.923, "gain": 1.0, "speed": 0.86,
+     "text": "There are hidden coves and quiet meadows tucked inside the woods, along a mile of shoreline that has never been crowded."},
+    {"file": "05.flac", "start": 33.621, "gain": 1.0, "speed": 0.86,
+     "text": "Now that same land is ready for its next chapter, with homes tucked into the trees, a quiet harbor in a sheltered cove, and neighbors who share the water."},
+    {"file": "06.flac", "start": 43.079, "gain": 1.0, "speed": 0.86,
+     "text": "Picture mornings on the water, afternoons in the shade of old oaks, and sunsets that stretch across the widest part of the lake."},
+    {"file": "07.flac", "start": 50.923, "gain": 1.0, "speed": 0.86,
+     "text": "A place where kids learn to fish off the dock, where evenings end on the porch, and where the city is close, but never too close."},
+    {"file": "08.flac", "start": 58.904, "gain": 1.0, "speed": 0.82,
+     "text": "Where the river bends and the tall oaks stand, the water and woods share the same old land. Come for a morning, and stay for a while. The lake has a way of teaching you to smile."},
+    {"file": "09.flac", "start": 70.363, "gain": 1.0, "speed": 0.86,
+     "text": "Sadler Farms.",
+     "note": "Cut from a full-sentence take (\"Sadler Farms. Come home to Lake Wheeler.\"); generated on its own it sounds stilted."},
+    {"file": "10.flac", "start": 72.812, "gain": 1.3, "speed": 0.80,
+     "text": "Come home.",
+     "note": "Slower and a touch louder for emphasis."},
+    {"file": "11.flac", "start": 74.316, "gain": 1.0, "speed": 0.84,
+     "text": "to Lake Wheeler."}
+  ],
+  "beds": {
+    "mood":      {"file": "mood.m4a",      "gain": 3.2,   "fade_start": 75, "fade": 3},
+    "fireflies": {"file": "fireflies.m4a", "gain": 2.989, "fade_start": 76, "fade": 2},
+    "bama":      {"file": "bama.m4a",      "gain": 3.291, "fade_start": 76, "fade": 2},
+    "cattails":  {"file": "cattails.m4a",  "gain": 2.967, "fade_start": 76, "fade": 2}
+  }
+}

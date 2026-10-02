@@ -8,3 +8,5 @@ Gemfile.lock
 assets/videos/
 assets/photos/
 assets/audio/source/
+tools/narration/.venv/
+tools/narration/models/
