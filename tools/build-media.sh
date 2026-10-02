@@ -3,7 +3,7 @@
 #   assets/photos/*.jpg  -> assets/media/photos/<n>-{800,1600}.webp
 #   assets/videos/*.mp4  -> assets/media/video/<name>/ (HLS ladder + poster)
 #
-# Usage: tools/build-media.sh [photos|concepts|film|loops|all]
+# Usage: tools/build-media.sh [photos|concepts|plans|film|loops|all]
 #
 # Sizes are deliberately small while we're on GitHub Pages. To raise the
 # ceiling later, add rungs to LADDER (e.g. "1080 1920 5000k").
@@ -61,6 +61,19 @@ build_concepts() {
     n=$(basename "$src" .png)
     magick "$src" -resize 800x -strip -quality 74 "$OUT/concepts/$n-800.webp"
     magick "$src" -strip -quality 74 "$OUT/concepts/$n-1440.webp"
+  done
+}
+
+# ---------------------------------------------------------------- plans
+# Developer drawings (land-use concept, lot layout, topography). Sources live in
+# assets/site-plans/ (committed, excluded from the site build); the PDFs are
+# made from the same sources by tools/build-pdfs.sh.
+build_plans() {
+  mkdir -p "$OUT/plans"
+  for src in assets/site-plans/*.jpg; do
+    n=$(basename "$src" .jpg)
+    magick "$src" -resize 800x -strip -quality 76 "$OUT/plans/$n-800.webp"
+    magick "$src" -strip -quality 80 "$OUT/plans/$n-full.webp"
   done
 }
 
@@ -203,9 +216,10 @@ build_loops() {
 case ${1:-all} in
   photos) build_photos ;;
   concepts) build_concepts ;;
+  plans)  build_plans ;;
   film)   build_film ;;
   loops)  build_loops ;;
-  all)    build_photos; build_concepts; build_film; build_loops ;;
-  *) echo "usage: $0 [photos|concepts|film|loops|all]" >&2; exit 1 ;;
+  all)    build_photos; build_concepts; build_plans; build_film; build_loops ;;
+  *) echo "usage: $0 [photos|concepts|plans|film|loops|all]" >&2; exit 1 ;;
 esac
 du -sh "$OUT"

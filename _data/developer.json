@@ -1,0 +1,74 @@
+{
+  "sheets": [
+    {
+      "slug": "land-use-concept",
+      "no": "1",
+      "title": "Conceptual Land-Use Plan",
+      "image": "assets/site-plans/dev-plan-1.jpg",
+      "orient": "landscape",
+      "note": "Illustrative land-use zones: marina and waterfront recreation, residential, residential/commercial, mixed-use/commercial, a market, festival and agricultural area, and open space/conservation.",
+      "web": "dev-plan-1",
+      "pdf_size": "778 KB"
+    },
+    {
+      "slug": "lot-layout",
+      "no": "2",
+      "title": "Conceptual Lot Layout",
+      "image": "assets/site-plans/dev-plan-2.jpg",
+      "orient": "landscape",
+      "note": "Illustrative street and lot arrangement for approximately 300 homesites, with waterfront, lake-view and interior lots around preserved open space.",
+      "web": "dev-plan-2",
+      "pdf_size": "777 KB"
+    },
+    {
+      "slug": "topography",
+      "no": "3",
+      "title": "Site Topography (Preliminary)",
+      "image": "assets/site-plans/topo.jpg",
+      "orient": "portrait",
+      "note": "Preliminary elevation map of the property, shaded from low ground near the water (blue) to higher ground (green). Not a survey; a full topographic survey will be provided separately.",
+      "web": "topo",
+      "pdf_size": "441 KB"
+    }
+  ],
+  "facts": [
+    {
+      "label": "Location",
+      "value": "Davis Road & Snake Road, Limestone County, Alabama"
+    },
+    {
+      "label": "Size",
+      "value": "Approximately 300 acres"
+    },
+    {
+      "label": "Waterfront",
+      "value": "About one mile on Lake Wheeler (Tennessee River), east of the Elk River confluence"
+    },
+    {
+      "label": "Access & utilities",
+      "value": "Two county roads; water and power available along both"
+    },
+    {
+      "label": "Drive times",
+      "value": "About 15 minutes to Athens and 25 minutes to Huntsville"
+    },
+    {
+      "label": "Current use",
+      "value": "Pasture, hay fields and mature hardwood forest; held by one family for 75+ years"
+    },
+    {
+      "label": "Concept program",
+      "value": "Approximately 300 homesites (townhomes to one-acre estate lots), marina and waterfront recreation, mixed-use/commercial and open space"
+    },
+    {
+      "label": "Shoreline",
+      "value": "Lake Wheeler is a TVA reservoir; docks and other shoreline structures require TVA Section 26a approval"
+    },
+    {
+      "label": "Zoning & entitlements",
+      "value": "To be confirmed"
+    }
+  ],
+  "disclaimer": "Sadler Farms represents a potential development opportunity. All plans, layouts, lot counts, uses and renderings are conceptual and illustrative only, are not engineered or surveyed, and are subject to planning, engineering, governmental approvals and permitting. Acreage, shoreline length, utilities and travel times are approximate and should be independently verified.",
+  "package_size": "2.4 MB"
+}

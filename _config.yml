@@ -23,3 +23,4 @@ exclude:
   - assets/videos
   - assets/audio
   - assets/concepts
+  - assets/site-plans

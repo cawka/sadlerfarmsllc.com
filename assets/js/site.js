@@ -303,7 +303,7 @@
   if (lb) {
     var img = lb.querySelector('img');
     var close = function () { lb.hidden = true; img.removeAttribute('src'); };
-    document.querySelectorAll('.gallery__item').forEach(function (a) {
+    document.querySelectorAll('.gallery__item, [data-lightbox]').forEach(function (a) {
       a.addEventListener('click', function (e) {
         e.preventDefault();
         img.src = a.href; img.alt = a.querySelector('img').alt;
