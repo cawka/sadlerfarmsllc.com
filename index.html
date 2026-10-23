@@ -4,14 +4,14 @@ title: Sadler Farms — Lakeside Living on Lake Wheeler
 description: >-
   Sadler Farms: 300 acres with more than a mile of waterfront on Lake Wheeler and the
   Tennessee River in Limestone County, Alabama — a vision for lakeside living.
-preload_image: /assets/media/video/film/poster.jpg
+preload_image: /assets/media/video/pitch/poster.jpg
 video:
-  name: Sadler Farms from the air
-  description: Drone footage of Sadler Farms — pasture, mature forest and more than a mile of Lake Wheeler shoreline in Limestone County, Alabama.
-  thumbnail: /assets/media/video/film/poster.jpg
-  content: /assets/media/video/film/master.m3u8
-  upload_date: 2026-09-29
-  duration: PT1M18S
+  name: Sadler Farms — a waterfront development opportunity on Lake Wheeler
+  description: A 45-second drone film of Sadler Farms, about 300 acres with more than a mile of shoreline on Lake Wheeler (Tennessee River) in Limestone County, Alabama, for prospective development partners.
+  thumbnail: /assets/media/video/pitch/poster.jpg
+  content: /assets/media/video/pitch/master.m3u8
+  upload_date: 2026-10-23
+  duration: PT45S
 ---
 {% assign ph = '/assets/media/photos/' | relative_url %}
 {% assign vid = '/assets/media/video/' | relative_url %}
@@ -19,8 +19,8 @@ video:
 
 <header class="hero hero--video" id="top">
   <div class="hero__media">
-    <video class="js-hls hero__video" data-src="{{ vid }}film/master.m3u8"
-           poster="{{ vid }}film/poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+    <video class="js-hls hero__video" data-src="{{ vid }}pitch/master.m3u8"
+           poster="{{ vid }}pitch/poster.jpg" autoplay muted loop playsinline preload="auto"></video>
   </div>
 
   <nav class="nav">
@@ -60,25 +60,6 @@ video:
     <span>Close</span>
   </button>
   <div class="hero__progress" aria-hidden="true"><span></span></div>
-
-  <!-- Secret soundtrack picker: tap the logo 5 times, or open /?soundtrack=<id>.
-       Order must match SOUNDTRACKS in tools/build-media.sh. -->
-  <script type="application/json" id="soundtracks">
-    [
-      {"id": "mood", "label": "Morning Mood",
-       "credit": "Film music: Grieg, &ldquo;Morning Mood&rdquo; &mdash; Musopen Symphony (public domain) &middot; Narration: AI voice"},
-      {"id": "fireflies", "label": "Fireflies and Stardust",
-       "credit": "Film music: &ldquo;Fireflies and Stardust&rdquo; Kevin MacLeod (<a href=\"https://incompetech.com\">incompetech.com</a>), licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a> &middot; Narration: AI voice"},
-      {"id": "bama", "label": "Bama Country",
-       "credit": "Film music: &ldquo;Bama Country&rdquo; Kevin MacLeod (<a href=\"https://incompetech.com\">incompetech.com</a>), licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a> &middot; Narration: AI voice"},
-      {"id": "cattails", "label": "Cattails",
-       "credit": "Film music: &ldquo;Cattails&rdquo; Kevin MacLeod (<a href=\"https://incompetech.com\">incompetech.com</a>), licensed under <a href=\"https://creativecommons.org/licenses/by/4.0/\">CC BY 4.0</a> &middot; Narration: AI voice"}
-    ]
-  </script>
-  <div class="soundtrack-picker" hidden>
-    <p class="soundtrack-picker__title">Soundtrack</p>
-    <div class="soundtrack-picker__list"></div>
-  </div>
 
   <div class="player-bar" data-for=".hero__video">
     <button class="player-bar__sound js-sound" type="button" aria-pressed="false">

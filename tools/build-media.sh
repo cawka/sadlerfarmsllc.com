@@ -3,7 +3,7 @@
 #   assets/photos/*.jpg  -> assets/media/photos/<n>-{800,1600}.webp
 #   assets/videos/*.mp4  -> assets/media/video/<name>/ (HLS ladder + poster)
 #
-# Usage: tools/build-media.sh [photos|concepts|plans|film|loops|all]
+# Usage: tools/build-media.sh [photos|concepts|plans|film|pitch|loops|all]
 #
 # Sizes are deliberately small while we're on GitHub Pages. To raise the
 # ceiling later, add rungs to LADDER (e.g. "1080 1920 5000k").
@@ -224,13 +224,24 @@ build_loops() {
   done
 }
 
+# ---------------------------------------------------------------- pitch film
+# The 45 s developer film shown in the hero (tools/pitch-film/build.py makes the
+# master with narration + music; this packages it as HLS). The earlier 78 s film
+# (build_film, assets/media/video/film/) is kept but no longer linked.
+build_pitch() {
+  python3 tools/pitch-film/build.py "$TMP/pitch.mp4"
+  hls "$TMP/pitch.mp4" "$OUT/video/pitch" 1
+  ffmpeg -v error -y -ss 4 -i "$TMP/pitch.mp4" -frames:v 1 -vf scale=1280:-2 -q:v 4 "$OUT/video/pitch/poster.jpg"
+}
+
 case ${1:-all} in
   photos) build_photos ;;
   concepts) build_concepts ;;
   plans)  build_plans ;;
   film)   build_film ;;
+  pitch)  build_pitch ;;
   loops)  build_loops ;;
-  all)    build_photos; build_concepts; build_plans; build_film; build_loops ;;
-  *) echo "usage: $0 [photos|concepts|plans|film|loops|all]" >&2; exit 1 ;;
+  all)    build_photos; build_concepts; build_plans; build_film; build_pitch; build_loops ;;
+  *) echo "usage: $0 [photos|concepts|plans|film|pitch|loops|all]" >&2; exit 1 ;;
 esac
 du -sh "$OUT"
