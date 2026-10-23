@@ -72,13 +72,18 @@ td:first-child { width: 1.9in; font-weight: 600; color: #1f3324; }
 
 
 def title_block(sheet, total):
+    if sheet.get("kind") == "survey":
+        flag = ('<span class="flag">REDUCED REFERENCE COPY &mdash; NOT TO SCALE.</span> Refer to the '
+                'full-size signed survey at sadlerfarmsllc.com/developers.')
+    else:
+        flag = f'<span class="flag">CONCEPTUAL &mdash; NOT FOR CONSTRUCTION. NOT A SURVEY.</span> {DISCLAIMER}'
     return f"""
 <div class="block">
   <div><div class="brand">Sadler Farms<small>Lake Wheeler &middot; Limestone County, AL</small></div></div>
   <div>
     <div class="sheet-title">{html.escape(sheet['title'])}</div>
     {html.escape(sheet['note'])}
-    <div class="fine"><span class="flag">CONCEPTUAL &mdash; NOT FOR CONSTRUCTION. NOT A SURVEY.</span> {DISCLAIMER}</div>
+    <div class="fine">{flag}</div>
   </div>
   <div class="meta">Sheet<b>{sheet['no']}</b>of {total}<div class="fine">Issued {ISSUED}</div></div>
 </div>"""
@@ -141,7 +146,8 @@ def main():
     OUT.mkdir(parents=True, exist_ok=True)
     total = len(SHEETS)
     for s in SHEETS:
-        render(sheet_page(s, total), OUT / f"sadler-farms-{s['slug']}.pdf")
+        if s.get("kind") != "survey":
+            render(sheet_page(s, total), OUT / f"sadler-farms-{s['slug']}.pdf")
     package = cover_page() + facts_page() + "".join(sheet_page(s, total) for s in SHEETS)
     render(package, OUT / "sadler-farms-developer-package.pdf")
 
@@ -151,7 +157,7 @@ def main():
         return f"{kb / 1024:.1f} MB" if kb >= 1000 else f"{kb:.0f} KB"
     DATA["package_size"] = size("sadler-farms-developer-package.pdf")
     for s in SHEETS:
-        s["pdf_size"] = size(f"sadler-farms-{s['slug']}.pdf")
+        s["pdf_size"] = size(s.get("original") or f"sadler-farms-{s['slug']}.pdf")
     DATA_FILE.write_text(json.dumps(DATA, indent=2) + "\n")
 
 

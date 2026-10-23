@@ -8,17 +8,34 @@
       "orient": "landscape",
       "note": "Illustrative street and lot arrangement for approximately 300 homesites, with waterfront, lake-view and interior lots around preserved open space.",
       "web": "dev-plan-2",
-      "pdf_size": "730 KB"
+      "pdf_size": "730 KB",
+      "kind": "plan"
     },
     {
-      "slug": "topography",
-      "no": "2",
-      "title": "Site Topography (Preliminary)",
-      "image": "assets/site-plans/topo.jpg",
+      "slug": "boundary-survey",
+      "kind": "survey",
+      "title": "Boundary Survey",
+      "web": "boundary-survey",
+      "image": "assets/site-plans/boundary-survey-print.jpg",
       "orient": "portrait",
-      "note": "Preliminary elevation map of the property, shaded from low ground near the water (blue) to higher ground (green). Not a survey; a full topographic survey will be provided separately.",
-      "web": "topo",
-      "pdf_size": "440 KB"
+      "date": "March 10, 2003",
+      "original": "sadler-farms-boundary-survey.pdf",
+      "note": "Signed boundary survey of the property, dated March 10, 2003. Prepared for Sadler Farms LLC by Barge Waggoner Sumner & Cannon (BWSC); Sec. 20, T3S, R6W, Limestone County, Alabama. Original scale 1\" = 200'.",
+      "no": "2",
+      "pdf_size": "1.6 MB"
+    },
+    {
+      "slug": "boundary-survey-topo",
+      "kind": "survey",
+      "title": "Boundary Survey with Topography",
+      "web": "boundary-survey-topo",
+      "image": "assets/site-plans/boundary-survey-topo-print.jpg",
+      "orient": "portrait",
+      "date": "March 18, 2003",
+      "original": "sadler-farms-boundary-survey-topo.pdf",
+      "note": "The same survey with topographic contours, revised March 18, 2003. Prepared for Sadler Farms LLC by Barge Waggoner Sumner & Cannon (BWSC); Sec. 20, T3S, R6W, Limestone County, Alabama. Original scale 1\" = 200'.",
+      "no": "3",
+      "pdf_size": "4.1 MB"
     }
   ],
   "facts": [
@@ -63,6 +80,6 @@
       "value": "To be confirmed"
     }
   ],
-  "disclaimer": "Sadler Farms represents a potential development opportunity. All plans, layouts, uses and renderings are conceptual and illustrative only, are not engineered or surveyed, and are subject to planning, engineering, governmental approvals and permitting. Acreage, shoreline length and travel times are approximate and should be independently verified.",
-  "package_size": "1.6 MB"
+  "disclaimer": "Sadler Farms represents a potential development opportunity. All plans, layouts, uses and renderings are conceptual and illustrative only, are not engineered, and are subject to planning, engineering, governmental approvals and permitting. Acreage, shoreline length and travel times are approximate and should be independently verified.",
+  "package_size": "2.8 MB"
 }

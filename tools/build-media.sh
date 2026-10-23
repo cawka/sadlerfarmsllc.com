@@ -75,6 +75,17 @@ build_plans() {
     magick "$src" -resize 800x -strip -quality 76 "$OUT/plans/$n-800.webp"
     magick "$src" -strip -quality 80 "$OUT/plans/$n-full.webp"
   done
+  # Surveys: the signed originals are in assets/downloads/sadler-farms-<name>.pdf
+  # (served unaltered). Render them north-up (the sheets are drawn rotated) to
+  # assets/site-plans/<name>.png for the web images and the package PDF.
+  for pdf in assets/downloads/sadler-farms-boundary-survey*.pdf; do
+    n=$(basename "$pdf" .pdf); n=${n#sadler-farms-}
+    pdftoppm -r 150 -gray -singlefile "$pdf" "$TMP/$n"
+    magick "$TMP/$n.pgm" -rotate 90 -strip -colorspace gray -depth 8 PNG8:"assets/site-plans/$n.png"
+    magick "assets/site-plans/$n.png" -resize 800x -strip -quality 80 "$OUT/plans/$n-800.webp"
+    magick "assets/site-plans/$n.png" -resize 3000x -strip -define webp:lossless=true "$OUT/plans/$n-full.webp"
+    magick "assets/site-plans/$n.png" -resize 2400x -strip -quality 72 "assets/site-plans/$n-print.jpg"  # package PDF
+  done
 }
 
 # ---------------------------------------------------------------- HLS

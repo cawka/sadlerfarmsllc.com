@@ -21,7 +21,7 @@ permalink: /developers/
       <a href="{{ home }}">Overview</a>
       <a href="#facts">Site facts</a>
       <a href="#plans">Plans</a>
-      <a href="#topography">Topography</a>
+      <a href="#surveys">Surveys</a>
       <a href="#documents">Documents</a>
     </div>
   </nav>
@@ -69,7 +69,7 @@ permalink: /developers/
         <h2 class="section__title">One way the land could come together.</h2>
         <p class="section__intro">Illustrative concepts to frame discussion &mdash; not engineered, surveyed or approved.</p>
       </div>
-      {% for s in d.sheets %}{% if s.orient == "landscape" %}
+      {% for s in d.sheets %}{% if s.kind != "survey" %}
       <article class="plan reveal">
         <a class="plan__media" href="{{ plans }}{{ s.web }}-full.webp" data-lightbox>
           <img src="{{ plans }}{{ s.web }}-800.webp" width="800" height="731" alt="{{ s.title }}" loading="lazy">
@@ -89,26 +89,26 @@ permalink: /developers/
     </div>
   </section>
 
-  <!-- ============================================================ Topography -->
-  <section class="section" id="topography">
+  <!-- ============================================================ Surveys -->
+  <section class="section" id="surveys">
     <div class="wrap">
-      {% for s in d.sheets %}{% if s.orient == "portrait" %}
+      <div class="section__head reveal">
+        <p class="eyebrow">Surveys</p>
+        <h2 class="section__title">Boundary and topographic survey.</h2>
+        <p class="section__intro">Prepared for Sadler Farms LLC by Barge Waggoner Sumner &amp; Cannon (BWSC). The signed, full-size surveys (42&nbsp;&times;&nbsp;30&nbsp;in) are available below as PDFs.</p>
+      </div>
+      {% for s in d.sheets %}{% if s.kind == "survey" %}
       <article class="plan plan--portrait reveal">
         <a class="plan__media" href="{{ plans }}{{ s.web }}-full.webp" data-lightbox>
-          <img src="{{ plans }}{{ s.web }}-800.webp" width="800" height="1067" alt="{{ s.title }}" loading="lazy">
+          <img src="{{ plans }}{{ s.web }}-800.webp" width="800" height="1116" alt="{{ s.title }}, {{ s.date }}" loading="lazy">
           <span class="plan__zoom">View larger</span>
         </a>
         <div class="plan__body">
-          <p class="eyebrow">Sheet {{ s.no }} &middot; Topography</p>
+          <p class="eyebrow">Survey &middot; {{ s.date }}</p>
           <h3>{{ s.title }}</h3>
           <p>{{ s.note }}</p>
-          <ul class="ticks ticks--dark">
-            <li>Gentle ridges and open fields on the higher ground inland</li>
-            <li>Drainages running down to coves along the shoreline</li>
-            <li>Long frontage on the main body of the lake</li>
-          </ul>
           <div class="plan__actions">
-            <a class="btn btn--small" href="{{ dl }}sadler-farms-{{ s.slug }}.pdf" download>Download PDF &middot; {{ s.pdf_size }}</a>
+            <a class="btn btn--small" href="{{ dl }}{{ s.original }}" download>Download signed survey &middot; {{ s.pdf_size }}</a>
             <a class="link" href="{{ plans }}{{ s.web }}-full.webp" target="_blank" rel="noopener">Open full size</a>
           </div>
         </div>
@@ -126,19 +126,20 @@ permalink: /developers/
       </div>
       <ul class="docs reveal">
         <li class="docs__item docs__item--main">
-          <div><strong>Developer package</strong><span>Cover, site facts and all sheets in one PDF</span></div>
+          <div><strong>Developer package</strong><span>Cover, site facts, lot layout and reduced copies of the surveys</span></div>
           <a class="btn btn--small" href="{{ dl }}sadler-farms-developer-package.pdf" download>PDF &middot; {{ d.package_size }}</a>
         </li>
         {% for s in d.sheets %}
         <li class="docs__item">
-          <div><strong>Sheet {{ s.no }} &mdash; {{ s.title }}</strong><span>Letter, {{ s.orient }}</span></div>
+          {% if s.kind == "survey" %}
+          <div><strong>{{ s.title }}</strong><span>Signed survey, {{ s.date }} &middot; full size, 42 &times; 30 in</span></div>
+          <a class="btn btn--small btn--outline" href="{{ dl }}{{ s.original }}" download>PDF &middot; {{ s.pdf_size }}</a>
+          {% else %}
+          <div><strong>{{ s.title }}</strong><span>Conceptual &middot; letter, {{ s.orient }}</span></div>
           <a class="btn btn--small btn--outline" href="{{ dl }}sadler-farms-{{ s.slug }}.pdf" download>PDF &middot; {{ s.pdf_size }}</a>
+          {% endif %}
         </li>
         {% endfor %}
-        <li class="docs__item docs__item--soon">
-          <div><strong>Topographic survey</strong><span>Professional survey of the property</span></div>
-          <span class="docs__soon">Coming soon</span>
-        </li>
       </ul>
       <p class="note note--center">More about the land itself &mdash; drone film, concept renderings and photos &mdash; is on the <a href="{{ home }}">main page</a>.</p>
     </div>
