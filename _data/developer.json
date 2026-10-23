@@ -1,18 +1,8 @@
 {
   "sheets": [
     {
-      "slug": "land-use-concept",
-      "no": "1",
-      "title": "Conceptual Land-Use Plan",
-      "image": "assets/site-plans/dev-plan-1.jpg",
-      "orient": "landscape",
-      "note": "Illustrative land-use zones: marina and waterfront recreation, residential, residential/commercial, mixed-use/commercial, a market, festival and agricultural area, and open space/conservation.",
-      "web": "dev-plan-1",
-      "pdf_size": "778 KB"
-    },
-    {
       "slug": "lot-layout",
-      "no": "2",
+      "no": "1",
       "title": "Conceptual Lot Layout",
       "image": "assets/site-plans/dev-plan-2.jpg",
       "orient": "landscape",
@@ -22,13 +12,13 @@
     },
     {
       "slug": "topography",
-      "no": "3",
+      "no": "2",
       "title": "Site Topography (Preliminary)",
       "image": "assets/site-plans/topo.jpg",
       "orient": "portrait",
       "note": "Preliminary elevation map of the property, shaded from low ground near the water (blue) to higher ground (green). Not a survey; a full topographic survey will be provided separately.",
       "web": "topo",
-      "pdf_size": "441 KB"
+      "pdf_size": "440 KB"
     }
   ],
   "facts": [
@@ -42,11 +32,15 @@
     },
     {
       "label": "Waterfront",
-      "value": "About one mile on Lake Wheeler (Tennessee River), east of the Elk River confluence"
+      "value": "More than one mile along the Tennessee River's Wheeler Reservoir, east of the Elk River confluence; portions are direct waterfront and portions adjoin TVA bluff land"
     },
     {
-      "label": "Access & utilities",
-      "value": "Two county roads; water and power available along both"
+      "label": "Coves",
+      "value": "Two protected coves; one is suitable for possible marina development"
+    },
+    {
+      "label": "Access",
+      "value": "Two county roads"
     },
     {
       "label": "Drive times",
@@ -58,7 +52,7 @@
     },
     {
       "label": "Concept program",
-      "value": "Approximately 300 homesites (townhomes to one-acre estate lots), marina and waterfront recreation, mixed-use/commercial and open space"
+      "value": "Approximately 300 homesites (townhomes to one-acre estate lots), a possible community marina, trails and open space"
     },
     {
       "label": "Shoreline",
@@ -69,6 +63,6 @@
       "value": "To be confirmed"
     }
   ],
-  "disclaimer": "Sadler Farms represents a potential development opportunity. All plans, layouts, lot counts, uses and renderings are conceptual and illustrative only, are not engineered or surveyed, and are subject to planning, engineering, governmental approvals and permitting. Acreage, shoreline length, utilities and travel times are approximate and should be independently verified.",
-  "package_size": "2.3 MB"
+  "disclaimer": "Sadler Farms represents a potential development opportunity. All plans, layouts, uses and renderings are conceptual and illustrative only, are not engineered or surveyed, and are subject to planning, engineering, governmental approvals and permitting. Acreage, shoreline length and travel times are approximate and should be independently verified.",
+  "package_size": "1.6 MB"
 }

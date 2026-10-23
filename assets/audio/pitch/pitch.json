@@ -1,0 +1,40 @@
+{
+  "title": "Sadler Farms developer pitch film",
+  "seconds": 45,
+  "voice": "am_onyx (Kokoro TTS v1.0), speed 0.95, matter-of-fact",
+  "clips": [
+    {"file": "01.flac", "start": 2.50,
+     "text": "Sadler Farms: a three-hundred-acre waterfront development opportunity on Lake Wheeler, on the Tennessee River in North Alabama."},
+    {"file": "02.flac", "start": 10.55,
+     "text": "Held by one family for more than seventy years, the land combines mature forest, rolling open fields, and more than a mile of shoreline, with two natural coves, one suitable for a future community marina."},
+    {"file": "03.flac", "start": 22.96,
+     "text": "The property faces one of the widest stretches of Wheeler Lake, Alabama's second-largest reservoir."},
+    {"file": "04.flac", "start": 29.52,
+     "text": "It is fifteen minutes from Athens and its new high school, and twenty-five minutes from Huntsville, one of the fastest-growing cities in the country."},
+    {"file": "05.flac", "start": 38.30,
+     "text": "The landowners are seeking a development partner."}
+  ],
+  "shots": [
+    {"clip": 8,  "start": 4,  "dur": 7.5, "what": "wide pasture, tree islands, lake"},
+    {"clip": 10, "start": 8,  "dur": 4.0, "what": "wooded peninsula, wide lake"},
+    {"clip": 15, "start": 7,  "dur": 4.0, "what": "meadow inside mature forest"},
+    {"clip": 4,  "start": 8,  "dur": 4.0, "what": "open fields down to the lake"},
+    {"clip": 14, "start": 6,  "dur": 3.5, "what": "protected cove"},
+    {"clip": 13, "start": 6,  "dur": 3.5, "what": "second cove / inlet"},
+    {"clip": 21, "start": 15, "dur": 8.0, "what": "long shoreline on the wide lake"},
+    {"card": "map-card.png",   "dur": 8.3, "what": "location map: Athens 15 min, Huntsville 25 min"},
+    {"clip": 9,  "start": 72, "dur": 9.4, "what": "sunlit closing aerial + end card"}
+  ],
+  "end_card_at": 41.0,
+  "music": {
+    "file": "Pennsylvania Rose.mp3",
+    "credit": "\"Pennsylvania Rose\" Kevin MacLeod (incompetech.com), CC BY 4.0",
+    "head": 20, "tail_from": 49.4, "xfade": 3,
+    "gain": 3.4, "lift_at": 41.2, "lift": 1.4
+  },
+  "birds": {
+    "file": "northern-mockingbird-sandtouch.ogg",
+    "credit": "Northern Mockingbird recording by Sandtouch Limited Company, CC BY 3.0, via Wikimedia Commons",
+    "from": 4, "dur": 6, "gain": 0.9
+  }
+}
