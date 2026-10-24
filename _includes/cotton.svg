@@ -1,0 +1,5 @@
+<svg class="nav__cotton" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">
+  <path d="M14.50 7.10 L18.82 2.62 L15.89 8.11 L17.43 12.86 L23.03 15.58 L16.90 14.50 L12.86 17.43 L12.00 23.60 L11.14 17.43 L7.10 14.50 L0.97 15.58 L6.57 12.86 L8.11 8.11 L5.18 2.62 L9.50 7.10Z" fill="#7a5530" stroke="#7a5530" stroke-width=".6" stroke-linejoin="round"/>
+  <g fill="#fbf8f1"><circle cx="12.00" cy="7.70" r="3.6"/><circle cx="9.74" cy="5.80" r="2.2"/><circle cx="14.26" cy="5.80" r="2.2"/><circle cx="16.09" cy="10.67" r="3.6"/><circle cx="17.20" cy="7.94" r="2.2"/><circle cx="18.60" cy="12.23" r="2.2"/><circle cx="14.53" cy="15.48" r="3.6"/><circle cx="17.47" cy="15.69" r="2.2"/><circle cx="13.82" cy="18.34" r="2.2"/><circle cx="9.47" cy="15.48" r="3.6"/><circle cx="10.18" cy="18.34" r="2.2"/><circle cx="6.53" cy="15.69" r="2.2"/><circle cx="7.91" cy="10.67" r="3.6"/><circle cx="5.40" cy="12.23" r="2.2"/><circle cx="6.80" cy="7.94" r="2.2"/></g>
+  <path d="M12.71 11.03 L15.64 6.98 M13.14 12.37 L17.90 13.92 M12.00 13.20 L12.00 18.20 M10.86 12.37 L6.10 13.92 M11.29 11.03 L8.36 6.98" stroke="#cbbd9e" stroke-width=".5" stroke-linecap="round"/>
+</svg>
