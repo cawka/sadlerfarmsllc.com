@@ -1,0 +1,17 @@
+<svg class="location__illus-svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="loc-illus-title">
+  <title id="loc-illus-title">Illustrative map: Sadler Farms on Lake Wheeler, about 15 minutes from Athens and 25 minutes from Huntsville</title>
+  <rect width="1920" height="1080" fill="#1f3324"/>
+  <text x="140" y="110" fill="#dcb968" font-family="Inter, sans-serif" font-weight="600" font-size="34" letter-spacing="7">NORTH ALABAMA</text>
+  <path d="M181,358 L368,379 L508,411 L617,438 L726,528 L835,655 L913,751 L1069,782 L1272,814 L1505,836 L1739,825" fill="none" stroke="#5f8fb0" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <text x="991" y="884" fill="#8fb3cc" font-family="Inter, sans-serif" font-size="34" font-style="italic">Lake Wheeler · Tennessee River</text>
+  <path d="M606,406 Q766,203 926,353" fill="none" stroke="#dcb968" stroke-width="5" stroke-dasharray="14 12"/>
+  <path d="M606,406 Q1066,766 1527,506" fill="none" stroke="#dcb968" stroke-width="5" stroke-dasharray="14 12"/>
+  <circle cx="606" cy="406" r="26" fill="#dcb968"/><circle cx="606" cy="406" r="46" fill="none" stroke="#dcb968" stroke-width="4" opacity=".6"/>
+  <circle cx="926" cy="353" r="17" fill="#fff"/><circle cx="1527" cy="506" r="21" fill="#fff"/>
+  <text x="560" y="300" text-anchor="end" fill="#fff" font-family="Fraunces, Georgia, serif" font-weight="600" font-size="64">Sadler Farms</text>
+  <text x="956" y="300" fill="#fff" font-family="Fraunces, Georgia, serif" font-weight="600" font-size="56">Athens</text>
+  <text x="766" y="240" text-anchor="middle" fill="#dcb968" font-family="Inter, sans-serif" font-weight="600" font-size="46">15 min</text>
+  <text x="1527" y="450" text-anchor="middle" fill="#fff" font-family="Fraunces, Georgia, serif" font-weight="600" font-size="60">Huntsville</text>
+  <text x="1126" y="680" text-anchor="middle" fill="#dcb968" font-family="Inter, sans-serif" font-weight="600" font-size="46">25 min</text>
+  <text x="1780" y="1020" text-anchor="end" fill="rgba(255,255,255,.5)" font-family="Inter, sans-serif" font-weight="500" font-size="26">Illustrative map · approximate drive times</text>
+</svg>

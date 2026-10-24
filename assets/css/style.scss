@@ -368,6 +368,8 @@ html.no-scroll { overflow: hidden; }
 .fact__num small { display: block; font-family: "Inter", sans-serif; font-size: .72rem; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-top: .3rem; }
 .fact h3 { margin: 0 0 .25rem; color: var(--green); font-size: 1.2rem; }
 .fact p { margin: 0; color: var(--muted); font-size: .95rem; }
+.location__illus { margin: 2.5rem 0 0; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow); background: #1f3324; }
+.location__illus-svg { display: block; width: 100%; height: auto; }
 
 /* ---------- Gallery ---------- */
 .section--dark { background: var(--green-d); }
