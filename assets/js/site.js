@@ -214,10 +214,20 @@
   }
 
   // ---------------------------------------------------------- before / after
-  // Pointer events drive dragging (tap or drag anywhere, mouse or touch);
-  // the visually hidden range input keeps it keyboard-accessible.
+  // One finger (or the mouse) drags the divider. Two fingers pinch-zoom, a
+  // double tap/click toggles zoom, and the scroll wheel zooms in the large view
+  // (or with ctrl / a trackpad pinch anywhere). Both images zoom together.
+  // While zoomed, dragging the handle still slides; dragging elsewhere pans.
+  // The visually hidden range input keeps it keyboard-accessible.
   function initCompare(c) {
     var r = c.querySelector('.compare__range');
+    var layers = c.querySelectorAll('.compare__layer');
+    var handle = c.querySelector('.compare__handle');
+    var modal = c.classList.contains('compare--modal');
+    var s = 1, tx = 0, ty = 0, MAX = 5;
+    var pts = new Map(), mode = null, pinch = null, startPos = 0, moved = false;
+    var lastTap = 0, tapPos = null, downX = 0, downY = 0, lastX = 0, lastY = 0;
+
     var set = function (pct) {
       pct = Math.max(0, Math.min(100, pct));
       r.value = pct;
@@ -230,20 +240,104 @@
       var box = c.getBoundingClientRect();
       set((e.clientX - box.left) / box.width * 100);
     };
-    var dragging = false;
+    var apply = function () {
+      var w = c.clientWidth, h = c.clientHeight;
+      var mx = (w * s - w) / 2, my = (h * s - h) / 2;
+      tx = Math.min(mx, Math.max(-mx, tx));
+      ty = Math.min(my, Math.max(-my, ty));
+      var t = s > 1 ? 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')' : '';
+      layers.forEach(function (l) { l.style.transform = t; });
+      c.classList.toggle('is-zoomed', s > 1);
+    };
+    // Zoom to ns keeping the picture point under (cx, cy) in place.
+    var zoomAt = function (ns, cx, cy) {
+      ns = Math.min(MAX, Math.max(1, ns));
+      if (ns < 1.02) ns = 1;
+      var box = c.getBoundingClientRect();
+      var px = cx - box.left - box.width / 2, py = cy - box.top - box.height / 2;
+      tx = px - (px - tx) * ns / s;
+      ty = py - (py - ty) * ns / s;
+      s = ns; apply();
+    };
+    var onHandle = function (e) {
+      return Math.abs(e.clientX - handle.getBoundingClientRect().left) < 30;
+    };
+
     c.addEventListener('pointerdown', function (e) {
-      if (e.button > 0 || e.target.closest('.compare__expand')) return;
-      dragging = true;
-      c.setPointerCapture(e.pointerId);
-      c.classList.add('is-dragging');
-      fromEvent(e);
+      if (e.button > 0 || e.target.closest('.compare__expand, .compare__zoom')) return;
+      try { c.setPointerCapture(e.pointerId); } catch (err) {}
+      pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (pts.size === 1) {
+        moved = false; downX = lastX = e.clientX; downY = lastY = e.clientY;
+        startPos = parseFloat(r.value);
+        if (s > 1 && !onHandle(e)) { mode = 'pan'; c.classList.add('is-panning'); }
+        else { mode = 'slide'; c.classList.add('is-dragging'); fromEvent(e); }
+      } else if (pts.size === 2) {
+        // Second finger: this is a pinch, not a slide -- undo any slide it started.
+        set(startPos); c.classList.remove('is-dragging');
+        var p = Array.from(pts.values());
+        pinch = { d: Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]) || 1, s: s,
+                  mx: (p[0][0] + p[1][0]) / 2, my: (p[0][1] + p[1][1]) / 2 };
+        mode = 'pinch'; moved = true;
+      }
     });
-    c.addEventListener('pointermove', function (e) { if (dragging) fromEvent(e); });
-    var end = function () { dragging = false; c.classList.remove('is-dragging'); };
+    c.addEventListener('pointermove', function (e) {
+      if (!pts.has(e.pointerId)) return;
+      pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) moved = true;
+      if (mode === 'pinch' && pts.size >= 2) {
+        var p = Array.from(pts.values());
+        var mx = (p[0][0] + p[1][0]) / 2, my = (p[0][1] + p[1][1]) / 2;
+        tx += mx - pinch.mx; ty += my - pinch.my;
+        pinch.mx = mx; pinch.my = my;
+        zoomAt(pinch.s * Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]) / pinch.d, mx, my);
+      } else if (mode === 'pan') {
+        tx += e.clientX - lastX; ty += e.clientY - lastY; apply();
+      } else if (mode === 'slide') {
+        fromEvent(e);
+      }
+      lastX = e.clientX; lastY = e.clientY;
+    });
+    var end = function (e) {
+      if (!pts.has(e.pointerId)) return;
+      pts.delete(e.pointerId);
+      if (pts.size) {                       // one finger left after a pinch: keep panning with it
+        if (mode === 'pinch') { var q = pts.values().next().value; lastX = q[0]; lastY = q[1]; mode = s > 1 ? 'pan' : null; pinch = null; }
+        return;
+      }
+      c.classList.remove('is-dragging', 'is-panning');
+      var was = mode; mode = null; pinch = null;
+      if (moved || e.type === 'pointercancel' || was === 'pinch') return;
+      var now = Date.now();
+      if (now - lastTap < 320) {            // double tap / double click: zoom, put the divider back
+        lastTap = 0;
+        if (tapPos !== null) set(tapPos);
+        if (s > 1) { s = 1; tx = ty = 0; apply(); } else zoomAt(2.5, e.clientX, e.clientY);
+      } else {
+        lastTap = now; tapPos = startPos;
+      }
+    };
     c.addEventListener('pointerup', end);
     c.addEventListener('pointercancel', end);
+    c.addEventListener('wheel', function (e) {
+      // Inline sliders leave plain scrolling to the page.
+      if (!modal && !e.ctrlKey) return;
+      e.preventDefault();
+      zoomAt(s * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.002)), e.clientX, e.clientY);
+    }, { passive: false });
+    c.querySelectorAll('.compare__zoom [data-zoom]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var box = c.getBoundingClientRect(), z = b.dataset.zoom;
+        if (z === 'fit') { s = 1; tx = ty = 0; apply(); }
+        else zoomAt(s * (z === 'in' ? 1.6 : 1 / 1.6), box.left + box.width / 2, box.top + box.height / 2);
+      });
+    });
+    // Safari's own pinch gesture events: keep it from zooming the page instead.
+    ['gesturestart', 'gesturechange'].forEach(function (t) { c.addEventListener(t, function (e) { e.preventDefault(); }); });
+    window.addEventListener('resize', apply);
     r.addEventListener('input', function () { set(parseFloat(r.value)); });
     set(parseFloat(r.value));
+    apply();
   }
   document.querySelectorAll('.compare').forEach(initCompare);
 
