@@ -299,18 +299,123 @@
   }
 
   // ---------------------------------------------------------- lightbox
+  // Pinch / scroll-wheel / double-tap to zoom, drag to pan, +/−/Fit buttons.
   var lb = document.querySelector('.lightbox');
   if (lb) {
+    var stage = lb.querySelector('.lightbox__stage');
     var img = lb.querySelector('img');
-    var close = function () { lb.hidden = true; img.removeAttribute('src'); };
+    var s = 1, tx = 0, ty = 0, maxS = 4;
+    var pts = new Map(), pinch = null, moved = false, lastTap = 0, lastX = 0, lastY = 0, downX = 0, downY = 0;
+
+    var apply = function () {
+      img.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')';
+      lb.classList.toggle('is-zoomed', s > 1.01);
+    };
+    var clamp = function () {
+      var mx = Math.max(0, (img.offsetWidth * s - stage.clientWidth) / 2);
+      var my = Math.max(0, (img.offsetHeight * s - stage.clientHeight) / 2);
+      tx = Math.min(mx, Math.max(-mx, tx));
+      ty = Math.min(my, Math.max(-my, ty));
+    };
+    // Zoom to scale ns keeping the image point under (cx, cy) in place.
+    var zoomAt = function (ns, cx, cy) {
+      ns = Math.min(maxS, Math.max(1, ns));
+      var r = stage.getBoundingClientRect();
+      var px = cx - r.left - r.width / 2, py = cy - r.top - r.height / 2;
+      tx = px - (px - tx) * ns / s;
+      ty = py - (py - ty) * ns / s;
+      s = ns; clamp(); apply();
+    };
+    var fit = function () { s = 1; tx = 0; ty = 0; apply(); };
+    var center = function () { var r = stage.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2]; };
+    var setMax = function () {
+      // Allow zooming to about 2x the image's real pixels, at least 4x.
+      maxS = img.offsetWidth ? Math.min(12, Math.max(4, 2 * img.naturalWidth / img.offsetWidth)) : 4;
+    };
+
+    var open = function (a) {
+      fit();
+      img.onload = setMax;
+      img.src = a.href; img.alt = a.querySelector('img').alt;
+      lb.hidden = false;
+      document.documentElement.style.overflow = 'hidden';
+    };
+    var close = function () {
+      lb.hidden = true; img.removeAttribute('src'); pts.clear(); pinch = null;
+      document.documentElement.style.overflow = '';
+    };
     document.querySelectorAll('.gallery__item, [data-lightbox]').forEach(function (a) {
-      a.addEventListener('click', function (e) {
-        e.preventDefault();
-        img.src = a.href; img.alt = a.querySelector('img').alt;
-        lb.hidden = false;
+      a.addEventListener('click', function (e) { e.preventDefault(); open(a); });
+    });
+
+    stage.addEventListener('pointerdown', function (e) {
+      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (pts.size === 1) { moved = false; lastX = downX = e.clientX; lastY = downY = e.clientY; }
+      if (pts.size === 2) {
+        var p = Array.from(pts.values());
+        pinch = { d: Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]), s: s,
+                  mx: (p[0][0] + p[1][0]) / 2, my: (p[0][1] + p[1][1]) / 2 };
+        moved = true;
+      }
+    });
+    stage.addEventListener('pointermove', function (e) {
+      if (!pts.has(e.pointerId)) return;
+      pts.set(e.pointerId, [e.clientX, e.clientY]);
+      if (pinch && pts.size >= 2) {
+        var p = Array.from(pts.values());
+        var mx = (p[0][0] + p[1][0]) / 2, my = (p[0][1] + p[1][1]) / 2;
+        tx += mx - pinch.mx; ty += my - pinch.my;    // two-finger pan
+        pinch.mx = mx; pinch.my = my;
+        zoomAt(pinch.s * Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]) / pinch.d, mx, my);
+      } else if (pts.size === 1) {
+        var dx = e.clientX - lastX, dy = e.clientY - lastY;
+        lastX = e.clientX; lastY = e.clientY;
+        moved = moved || Math.hypot(e.clientX - downX, e.clientY - downY) > 6;
+        if (s > 1) { tx += dx; ty += dy; clamp(); apply(); lb.classList.add('is-dragging'); }
+      }
+    });
+    var up = function (e) {
+      if (!pts.has(e.pointerId)) return;
+      pts.delete(e.pointerId);
+      lb.classList.remove('is-dragging');
+      if (pts.size < 2) pinch = null;
+      if (pts.size === 1) { var p = pts.values().next().value; lastX = p[0]; lastY = p[1]; }
+      if (pts.size || moved || e.type === 'pointercancel') return;
+      var now = Date.now();
+      if (now - lastTap < 320) {                    // double tap / double click
+        lastTap = 0;
+        if (s > 1.01) fit(); else zoomAt(Math.min(maxS, 2.5), e.clientX, e.clientY);
+      } else {
+        lastTap = now;
+        if (e.target !== img && s <= 1.01) close();  // tap outside the picture
+      }
+    };
+    stage.addEventListener('pointerup', up);
+    stage.addEventListener('pointercancel', up);
+    stage.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      // Trackpad pinch arrives as ctrl+wheel with small deltas; mouse wheels step larger.
+      zoomAt(s * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.002)), e.clientX, e.clientY);
+    }, { passive: false });
+    // Safari's own pinch gesture events: keep it from zooming the page underneath.
+    ['gesturestart', 'gesturechange'].forEach(function (t) { lb.addEventListener(t, function (e) { e.preventDefault(); }); });
+
+    lb.querySelector('.lightbox__close').addEventListener('click', close);
+    lb.querySelectorAll('[data-zoom]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var c = center(), z = b.dataset.zoom;
+        if (z === 'fit') fit(); else zoomAt(s * (z === 'in' ? 1.6 : 1 / 1.6), c[0], c[1]);
       });
     });
-    lb.addEventListener('click', function (e) { if (e.target !== img) close(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    document.addEventListener('keydown', function (e) {
+      if (lb.hidden) return;
+      var c = center();
+      if (e.key === 'Escape') close();
+      else if (e.key === '+' || e.key === '=') zoomAt(s * 1.6, c[0], c[1]);
+      else if (e.key === '-') zoomAt(s / 1.6, c[0], c[1]);
+      else if (e.key === '0') fit();
+    });
+    window.addEventListener('resize', function () { if (!lb.hidden) { setMax(); clamp(); apply(); } });
   }
 })();
