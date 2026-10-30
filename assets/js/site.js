@@ -214,10 +214,11 @@
   }
 
   // ---------------------------------------------------------- before / after
-  // One finger (or the mouse) drags the divider. Two fingers pinch-zoom, a
-  // double tap/click toggles zoom, and the scroll wheel zooms in the large view
-  // (or with ctrl / a trackpad pinch anywhere). Both images zoom together.
-  // While zoomed, dragging the handle still slides; dragging elsewhere pans.
+  // One finger (or the mouse) drags the divider. On the page, a pinch is left
+  // to the browser (it zooms the whole page) and a double tap/click opens the
+  // full-screen view. In the full-screen view, pinch, double tap, the scroll
+  // wheel and the -/Fit/+ buttons zoom both images together; while zoomed,
+  // dragging the handle still slides and dragging elsewhere pans.
   // The visually hidden range input keeps it keyboard-accessible.
   function initCompare(c) {
     var r = c.querySelector('.compare__range');
@@ -226,6 +227,11 @@
     var modal = c.classList.contains('compare--modal');
     var s = 1, tx = 0, ty = 0, MAX = 5;
     var pts = new Map(), mode = null, pinch = null, startPos = 0, moved = false;
+    // Second finger down: this is a pinch, not a slide -- undo any slide it started.
+    var startPinch = function () {
+      if (mode !== 'pinch') { set(startPos); c.classList.remove('is-dragging'); }
+      mode = 'pinch'; moved = true;
+    };
     var lastTap = 0, tapTimer = null, downX = 0, downY = 0, lastX = 0, lastY = 0;
 
     var set = function (pct) {
@@ -277,12 +283,7 @@
         else if (s > 1) { mode = 'pan'; c.classList.add('is-panning'); }
         else mode = 'pending';
       } else if (pts.size === 2) {
-        // Second finger: this is a pinch, not a slide -- undo any slide it started.
-        set(startPos); c.classList.remove('is-dragging');
-        var p = Array.from(pts.values());
-        pinch = { d: Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]) || 1, s: s,
-                  mx: (p[0][0] + p[1][0]) / 2, my: (p[0][1] + p[1][1]) / 2 };
-        mode = 'pinch'; moved = true;
+        startPinch();                       // the zoom itself is driven by the touch events below
       }
     });
     c.addEventListener('pointermove', function (e) {
@@ -290,13 +291,7 @@
       pts.set(e.pointerId, [e.clientX, e.clientY]);
       if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) moved = true;
       if (mode === 'pending' && moved) { mode = 'slide'; c.classList.add('is-dragging'); }
-      if (mode === 'pinch' && pts.size >= 2) {
-        var p = Array.from(pts.values());
-        var mx = (p[0][0] + p[1][0]) / 2, my = (p[0][1] + p[1][1]) / 2;
-        tx += mx - pinch.mx; ty += my - pinch.my;
-        pinch.mx = mx; pinch.my = my;
-        zoomAt(pinch.s * Math.hypot(p[0][0] - p[1][0], p[0][1] - p[1][1]) / pinch.d, mx, my);
-      } else if (mode === 'pan') {
+      if (mode === 'pan') {
         tx += e.clientX - lastX; ty += e.clientY - lastY; apply();
       } else if (mode === 'slide') {
         fromEvent(e);
@@ -307,17 +302,19 @@
       if (!pts.has(e.pointerId)) return;
       pts.delete(e.pointerId);
       if (pts.size) {                       // one finger left after a pinch: keep panning with it
-        if (mode === 'pinch') { var q = pts.values().next().value; lastX = q[0]; lastY = q[1]; mode = s > 1 ? 'pan' : null; pinch = null; }
+        if (mode === 'pinch') { var q = pts.values().next().value; lastX = q[0]; lastY = q[1]; mode = s > 1 ? 'pan' : null; }
         return;
       }
       c.classList.remove('is-dragging', 'is-panning');
-      var was = mode; mode = null; pinch = null;
+      var was = mode; mode = null;
       if (moved || e.type === 'pointercancel' || was === 'pinch') return;
       var now = Date.now(), x = e.clientX, y = e.clientY;
       clearTimeout(tapTimer);
-      if (now - lastTap < 350) {            // double tap / double click: zoom only
+      if (now - lastTap < 350) {            // double tap / double click: zoom (or open full screen)
         lastTap = 0;
-        if (s > 1) { s = 1; tx = ty = 0; apply(); } else zoomAt(2.5, x, y);
+        var ex = c.querySelector('.compare__expand');
+        if (!modal) { if (ex) ex.click(); }
+        else if (s > 1) { s = 1; tx = ty = 0; apply(); } else zoomAt(2.5, x, y);
       } else {
         lastTap = now;
         if (was === 'pending' || was === 'pan')
@@ -327,8 +324,7 @@
     c.addEventListener('pointerup', end);
     c.addEventListener('pointercancel', end);
     c.addEventListener('wheel', function (e) {
-      // Inline sliders leave plain scrolling to the page.
-      if (!modal && !e.ctrlKey) return;
+      if (!modal) return;                   // on the page, wheel and pinch belong to the page
       e.preventDefault();
       zoomAt(s * Math.exp(-e.deltaY * (e.ctrlKey ? 0.01 : 0.002)), e.clientX, e.clientY);
     }, { passive: false });
@@ -339,8 +335,32 @@
         else zoomAt(s * (z === 'in' ? 1.6 : 1 / 1.6), box.left + box.width / 2, box.top + box.height / 2);
       });
     });
-    // Safari's own pinch gesture events: keep it from zooming the page instead.
-    ['gesturestart', 'gesturechange'].forEach(function (t) { c.addEventListener(t, function (e) { e.preventDefault(); }); });
+    // Pinch comes from touch events: iOS Safari may cancel pointer events for a
+    // two-finger gesture it treats as a scroll. preventDefault while two fingers
+    // are down keeps the browser from scrolling or zooming the page instead.
+    var pinchInfo = function (e) {
+      var a = e.touches[0], b = e.touches[1];
+      return { d: Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY) || 1,
+               mx: (a.clientX + b.clientX) / 2, my: (a.clientY + b.clientY) / 2 };
+    };
+    if (modal) c.addEventListener('touchstart', function (e) {
+      if (e.touches.length < 2) return;
+      e.preventDefault();
+      startPinch();
+      pinch = pinchInfo(e); pinch.s = s;
+    }, { passive: false });
+    if (modal) c.addEventListener('touchmove', function (e) {
+      if (!pinch || e.touches.length < 2) return;
+      e.preventDefault();
+      var q = pinchInfo(e);
+      tx += q.mx - pinch.mx; ty += q.my - pinch.my;   // two-finger pan
+      pinch.mx = q.mx; pinch.my = q.my;
+      zoomAt(pinch.s * q.d / pinch.d, q.mx, q.my);
+    }, { passive: false });
+    var touchEnd = function (e) { if (e.touches.length < 2) pinch = null; };
+    c.addEventListener('touchend', touchEnd);
+    c.addEventListener('touchcancel', touchEnd);
+    if (modal) ['gesturestart', 'gesturechange'].forEach(function (t) { c.addEventListener(t, function (e) { e.preventDefault(); }); });
     window.addEventListener('resize', apply);
     r.addEventListener('input', function () { set(parseFloat(r.value)); });
     set(parseFloat(r.value));

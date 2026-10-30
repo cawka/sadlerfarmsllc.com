@@ -11,3 +11,4 @@ assets/audio/source/
 tools/narration/.venv/
 tools/narration/models/
 assets/site-plans/boundary-survey*.png
+_data/build.yml

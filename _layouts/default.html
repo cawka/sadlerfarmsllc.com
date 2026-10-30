@@ -66,6 +66,7 @@
       {% if page.video %}
       <p class="site-footer__credit">Film music: &ldquo;Pennsylvania Rose&rdquo; Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>), <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> &middot; Birdsong: Northern Mockingbird, Sandtouch Limited Company, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:NorthernMockingbirdSandtouch2.ogg">Wikimedia Commons</a> &middot; Narration: AI voice</p>
       {% endif %}
+      <p class="site-footer__made">Made by <a href="https://labs.a2cons.com">A2 Labs</a>{% if site.data.build.sha %} <span class="site-footer__ver">{{ site.data.build.sha }}</span>{% endif %}</p>
       {% comment %} Contact email hidden for now — will point to realtor later.
       <p><a href="mailto:{{ site.email }}">{{ site.email }}</a></p>
       {% endcomment %}
