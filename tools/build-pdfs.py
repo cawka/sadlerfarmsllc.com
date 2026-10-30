@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the downloadable PDFs for the developers page.
+"""Build the downloadable PDFs for the developers section of the main page.
 
 Each sheet is a small print-styled HTML page rendered to PDF by headless Chrome:
   assets/downloads/sadler-farms-land-use-concept.pdf
@@ -10,7 +10,7 @@ Each sheet is a small print-styled HTML page rendered to PDF by headless Chrome:
 Usage: tools/build-pdfs.py
 Sources: assets/site-plans/*.jpg, assets/img/hero.jpg (cover).
 Facts and sheets come from _data/developer.json; file sizes are written back
-there for the download links on developers.html.
+there for the download links in index.html (#developers).
 """
 import datetime
 import html
@@ -24,7 +24,7 @@ OUT = ROOT / "assets" / "downloads"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ISSUED = datetime.date.today().strftime("%B %Y")
 
-# Site facts, sheet list and disclaimer are shared with developers.html.
+# Site facts, sheet list and disclaimer are shared with index.html (#developers).
 DATA_FILE = ROOT / "_data" / "developer.json"
 DATA = json.loads(DATA_FILE.read_text())
 SHEETS = DATA["sheets"]
