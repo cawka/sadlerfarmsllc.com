@@ -226,7 +226,7 @@
     var modal = c.classList.contains('compare--modal');
     var s = 1, tx = 0, ty = 0, MAX = 5;
     var pts = new Map(), mode = null, pinch = null, startPos = 0, moved = false;
-    var lastTap = 0, tapPos = null, downX = 0, downY = 0, lastX = 0, lastY = 0;
+    var lastTap = 0, tapTimer = null, downX = 0, downY = 0, lastX = 0, lastY = 0;
 
     var set = function (pct) {
       pct = Math.max(0, Math.min(100, pct));
@@ -270,8 +270,12 @@
       if (pts.size === 1) {
         moved = false; downX = lastX = e.clientX; downY = lastY = e.clientY;
         startPos = parseFloat(r.value);
-        if (s > 1 && !onHandle(e)) { mode = 'pan'; c.classList.add('is-panning'); }
-        else { mode = 'slide'; c.classList.add('is-dragging'); fromEvent(e); }
+        // Grabbing the handle slides at once. Elsewhere the divider waits: a drag
+        // slides, a single tap jumps there (after the double-tap window), and a
+        // double tap only zooms.
+        if (onHandle(e)) { mode = 'slide'; c.classList.add('is-dragging'); }
+        else if (s > 1) { mode = 'pan'; c.classList.add('is-panning'); }
+        else mode = 'pending';
       } else if (pts.size === 2) {
         // Second finger: this is a pinch, not a slide -- undo any slide it started.
         set(startPos); c.classList.remove('is-dragging');
@@ -285,6 +289,7 @@
       if (!pts.has(e.pointerId)) return;
       pts.set(e.pointerId, [e.clientX, e.clientY]);
       if (Math.hypot(e.clientX - downX, e.clientY - downY) > 6) moved = true;
+      if (mode === 'pending' && moved) { mode = 'slide'; c.classList.add('is-dragging'); }
       if (mode === 'pinch' && pts.size >= 2) {
         var p = Array.from(pts.values());
         var mx = (p[0][0] + p[1][0]) / 2, my = (p[0][1] + p[1][1]) / 2;
@@ -308,13 +313,15 @@
       c.classList.remove('is-dragging', 'is-panning');
       var was = mode; mode = null; pinch = null;
       if (moved || e.type === 'pointercancel' || was === 'pinch') return;
-      var now = Date.now();
-      if (now - lastTap < 320) {            // double tap / double click: zoom, put the divider back
+      var now = Date.now(), x = e.clientX, y = e.clientY;
+      clearTimeout(tapTimer);
+      if (now - lastTap < 350) {            // double tap / double click: zoom only
         lastTap = 0;
-        if (tapPos !== null) set(tapPos);
-        if (s > 1) { s = 1; tx = ty = 0; apply(); } else zoomAt(2.5, e.clientX, e.clientY);
+        if (s > 1) { s = 1; tx = ty = 0; apply(); } else zoomAt(2.5, x, y);
       } else {
-        lastTap = now; tapPos = startPos;
+        lastTap = now;
+        if (was === 'pending' || was === 'pan')
+          tapTimer = setTimeout(function () { fromEvent({ clientX: x }); }, 350);
       }
     };
     c.addEventListener('pointerup', end);
