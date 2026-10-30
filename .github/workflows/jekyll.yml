@@ -35,7 +35,8 @@ jobs:
           enablement: true
 
       - name: Stamp the deployed commit (footer)
-        run: echo "sha: ${GITHUB_SHA::7}" > _data/build.yml
+        run: |
+          echo "sha: ${GITHUB_SHA::7}" > _data/build.yml
 
       - name: Build with Jekyll
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
