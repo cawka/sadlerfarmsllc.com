@@ -122,6 +122,9 @@ a { color: var(--green); }
 .stats__item:last-child { border-right: none; }
 .stats__num { font-family: "Fraunces", serif; font-size: 2.4rem; color: var(--gold-l); line-height: 1; }
 .stats__label { display: block; margin-top: .5rem; font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.7); }
+/* A tile that is just a bold phrase, no number or label */
+.stats__item--text { display: flex; align-items: center; justify-content: center; }
+.stats__item--text .stats__num { font-size: 1.55rem; font-weight: 600; line-height: 1.2; }
 
 /* ---------- Sections ---------- */
 .section { padding: 6rem 0; }
