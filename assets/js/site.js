@@ -271,6 +271,7 @@
 
     c.addEventListener('pointerdown', function (e) {
       if (e.button > 0 || e.target.closest('.compare__expand, .compare__zoom')) return;
+      if (e.pointerType === 'touch' && !modal) return;   // fingers on the page: touch events below
       try { c.setPointerCapture(e.pointerId); } catch (err) {}
       pts.set(e.pointerId, [e.clientX, e.clientY]);
       if (pts.size === 1) {
@@ -308,17 +309,21 @@
       c.classList.remove('is-dragging', 'is-panning');
       var was = mode; mode = null;
       if (moved || e.type === 'pointercancel' || was === 'pinch') return;
-      var now = Date.now(), x = e.clientX, y = e.clientY;
+      tap(e.clientX, e.clientY, was === 'pending' || was === 'pan');
+    };
+    // A tap moves the divider there (after the double-tap window); a double tap
+    // zooms in the full-screen view, or opens it from the page.
+    var tap = function (x, y, jump) {
+      var now = Date.now();
       clearTimeout(tapTimer);
-      if (now - lastTap < 350) {            // double tap / double click: zoom (or open full screen)
+      if (now - lastTap < 350) {
         lastTap = 0;
         var ex = c.querySelector('.compare__expand');
         if (!modal) { if (ex) ex.click(); }
         else if (s > 1) { s = 1; tx = ty = 0; apply(); } else zoomAt(2.5, x, y);
       } else {
         lastTap = now;
-        if (was === 'pending' || was === 'pan')
-          tapTimer = setTimeout(function () { fromEvent({ clientX: x }); }, 350);
+        if (jump) tapTimer = setTimeout(function () { fromEvent({ clientX: x }); }, 350);
       }
     };
     c.addEventListener('pointerup', end);
@@ -335,6 +340,41 @@
         else zoomAt(s * (z === 'in' ? 1.6 : 1 / 1.6), box.left + box.width / 2, box.top + box.height / 2);
       });
     });
+    // Fingers on the page slider. Pointer events get cancelled when the browser
+    // decides a quick swipe is a page scroll, so read the touches directly: once
+    // the swipe is clearly sideways, block the scroll and slide; if it is
+    // vertical, let the page scroll. Two fingers are left to the browser (page zoom).
+    if (!modal) {
+      var tt = null;
+      c.addEventListener('touchstart', function (e) {
+        tt = null;
+        if (e.touches.length !== 1 || e.target.closest('.compare__expand')) return;
+        var t = e.touches[0];
+        tt = { x: t.clientX, y: t.clientY, mode: onHandle(t) ? 'slide' : null };
+        if (tt.mode) c.classList.add('is-dragging');
+      }, { passive: true });
+      c.addEventListener('touchmove', function (e) {
+        if (!tt) return;
+        if (e.touches.length !== 1) { tt = null; c.classList.remove('is-dragging'); return; }
+        var t = e.touches[0], dx = t.clientX - tt.x, dy = t.clientY - tt.y;
+        if (!tt.mode) {
+          if (Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+          tt.mode = Math.abs(dx) >= Math.abs(dy) ? 'slide' : 'scroll';
+          if (tt.mode === 'slide') c.classList.add('is-dragging');
+        }
+        if (tt.mode === 'slide') {
+          if (e.cancelable) e.preventDefault();
+          fromEvent(t);
+        }
+      }, { passive: false });
+      c.addEventListener('touchend', function (e) {
+        if (!tt) return;
+        var m = tt.mode; tt = null;
+        c.classList.remove('is-dragging');
+        if (!m && !e.touches.length) tap(e.changedTouches[0].clientX, e.changedTouches[0].clientY, true);
+      });
+      c.addEventListener('touchcancel', function () { tt = null; c.classList.remove('is-dragging'); });
+    }
     // Pinch comes from touch events: iOS Safari may cancel pointer events for a
     // two-finger gesture it treats as a scroll. preventDefault while two fingers
     // are down keeps the browser from scrolling or zooming the page instead.
