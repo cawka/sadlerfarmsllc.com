@@ -48,12 +48,18 @@ build_photos() {
       magick "$src" -auto-orient -resize "${w}x" -strip -quality 72 "$OUT/photos/$n-$w.webp"
     done
   done
+  # Photo 67 cropped to the framing of the Waterfront Estates concept, for its
+  # before/after slider
+  for w in 800 1600; do
+    magick "$SRC_PHOTOS/SadlerFarms_083026_AerialPhoto (67).jpg" -auto-orient \
+      -crop 4308x3231+479+584 +repage -resize "${w}x" -strip -quality 72 "$OUT/photos/67-estates-$w.webp"
+  done
   # Social/OG image (JPEG for crawler compatibility)
   magick "$SRC_PHOTOS/SadlerFarms_083026_AerialPhoto (41).jpg" -resize 1600x -strip -quality 78 assets/img/hero.jpg
 }
 
 # ---------------------------------------------------------------- concepts
-# Artist's-concept images (made in ChatGPT from our photos 41, 42, 62, 22).
+# Artist's-concept images (made in ChatGPT from our photos 41, 42, 67, 22).
 # Sources live in assets/concepts/ (committed, excluded from the site build).
 build_concepts() {
   mkdir -p "$OUT/concepts"
