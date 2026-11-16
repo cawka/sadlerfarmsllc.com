@@ -136,38 +136,55 @@ video:
       <div class="section__head reveal">
         <p class="eyebrow">A diversity of residences</p>
         <h2 class="section__title">Homes shaped by the setting.</h2>
-        <p class="section__intro">Three ways to live on the land — each placed where the landscape suits it best. Drag any image to see the land as it is today; double-tap for a full-screen view you can zoom.</p>
+        <p class="section__intro">Four ways to live on the land — each placed where the landscape suits it best. Tap any image to see it full size and zoom in.</p>
       </div>
-      <div class="grid grid--3">
+      <div class="grid grid--2">
         <article class="tile reveal">
-          {% capture before %}{{ ph }}22-800.webp{% endcapture %}{% capture after %}{{ cx }}marina-800.webp{% endcapture %}{% capture before_l %}{{ ph }}22-1600.webp{% endcapture %}{% capture after_l %}{{ cx }}marina-1440.webp{% endcapture %}
-          {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="A sheltered cove on Lake Wheeler today"
-             before_large=before_l after_large=after_l after=after after_w="800" after_h="599" after_alt="Artist's concept: townhomes and a small marina in the cove" %}
+          <a class="tile__media" href="{{ cx }}marina-1440.webp" data-lightbox>
+            <img src="{{ cx }}marina-800.webp" srcset="{{ cx }}marina-800.webp 800w, {{ cx }}marina-1440.webp 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+                 width="800" height="451" alt="Artist's concept board: The Cove Inn marina, boat ramp and dry-stack storage at the head of the cove, with duplex townhomes along both banks" loading="lazy">
+            <span class="plan__zoom">View larger</span>
+          </a>
           <div class="tile__body">
-            <h3>Marina Townhomes</h3>
-            <p>Two-story, two-bedroom townhomes around a protected cove, looking out over the boats and the water.</p>
+            <h3>Cove Inn Marina and Townhomes</h3>
+            <p>Waterfront Townhomes situated in a protected cove overlooking a community marina and views of Wheeler Lake!</p>
           </div>
         </article>
         <article class="tile reveal">
-          {% capture before %}{{ ph }}67-estates-800.webp{% endcapture %}{% capture after %}{{ cx }}estates-800.webp{% endcapture %}{% capture before_l %}{{ ph }}67-estates-1600.webp{% endcapture %}{% capture after_l %}{{ cx }}estates-1440.webp{% endcapture %}
-          {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="600" before_alt="Wooded shoreline with open fields behind it today"
-             before_large=before_l after_large=after_l after=after after_w="800" after_h="600" after_alt="Artist's concept: estate homes on one-acre lots up on the bluff, with a wooded buffer, a waterfront trail and paths from each home down to it" %}
+          <a class="tile__media" href="{{ cx }}estates-1440.webp" data-lightbox>
+            <img src="{{ cx }}estates-800.webp" srcset="{{ cx }}estates-800.webp 800w, {{ cx }}estates-1440.webp 1536w" sizes="(max-width: 760px) 100vw, 50vw"
+                 width="800" height="533" alt="Artist's concept board: Waterfront Estates, with four home designs, a shared pool and covered boathouse for each group of four lots, and the site plan of 16 lots" loading="lazy">
+            <span class="plan__zoom">View larger</span>
+          </a>
           <div class="tile__body">
             <h3>Waterfront Estates</h3>
-            <p>Private one-acre homesites along more than a mile of shoreline, with direct views across the widest part of the lake.</p>
+            <p>Waterfront Estate Homes and Boat Houses &mdash; An extraordinary vision of luxury lakefront living, featuring breathtaking panoramic views across the widest expanse of Wheeler Lake!</p>
           </div>
         </article>
         <article class="tile reveal">
-          {% capture before %}{{ ph }}42-800.webp{% endcapture %}{% capture after %}{{ cx }}nature-800.webp{% endcapture %}{% capture before_l %}{{ ph }}42-1600.webp{% endcapture %}{% capture after_l %}{{ cx }}nature-1440.webp{% endcapture %}
-          {% include compare.html class="compare--card" start="10" before=before before_w="800" before_h="599" before_alt="Rolling pasture framed by mature trees today"
-             before_large=before_l after_large=after_l after=after after_w="800" after_h="599" after_alt="Artist's concept: farmhouse-style homes around an open meadow" %}
+          <a class="tile__media" href="{{ cx }}riverview-1440.webp" data-lightbox>
+            <img src="{{ cx }}riverview-800.webp" srcset="{{ cx }}riverview-800.webp 800w, {{ cx }}riverview-1440.webp 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+                 width="800" height="451" alt="Artist's concept board: Riverview Residences, three condominium buildings with pools and gazebos facing the lake" loading="lazy">
+            <span class="plan__zoom">View larger</span>
+          </a>
           <div class="tile__body">
-            <h3>Homes Within Nature</h3>
-            <p>Residences set into the rolling hills, forest edges and open fields, linked by green space and walking trails.</p>
+            <h3>Riverview Residences</h3>
+            <p>Where spectacular lake views, beautiful architecture, and unforgettable moments come together!</p>
+          </div>
+        </article>
+        <article class="tile reveal">
+          <a class="tile__media" href="{{ cx }}nature-1440.webp" data-lightbox>
+            <img src="{{ cx }}nature-800.webp" srcset="{{ cx }}nature-800.webp 800w, {{ cx }}nature-1440.webp 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+                 width="800" height="451" alt="Artist's concept board: Estates in Nature master plan, with one-acre estate lots along winding roads, ponds and preserved forest above Wheeler Lake" loading="lazy">
+            <span class="plan__zoom">View larger</span>
+          </a>
+          <div class="tile__body">
+            <h3>Estates in Nature</h3>
+            <p>Estates in Nature blend into the natural preserved landscape of mature hardwood forests and rolling green fields!</p>
           </div>
         </article>
       </div>
-      <p class="note note--center">Artist&rsquo;s concepts based on drone photos of the property. Residential types, locations and quantities would be set through the development planning process.</p>
+      <p class="note note--center">Artist&rsquo;s concepts for illustration only. Residential types, locations and quantities would be set through the development planning process.</p>
     </div>
   </section>
 

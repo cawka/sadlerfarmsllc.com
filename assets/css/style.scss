@@ -269,9 +269,13 @@ a { color: var(--green); }
 
 /* ---------- Tiles ---------- */
 .grid--3 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 760px) { .grid--2 { grid-template-columns: 1fr; } }
 .grid--4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 .tile { background: #fff; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); transition: transform .2s ease, box-shadow .2s ease; }
 .tile:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.tile__media { position: relative; display: block; background: var(--green-d); }
+.tile__media img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: center top; display: block; }
 .tile > img { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; display: block; }
 .tile__body { padding: 1.5rem 1.6rem 1.8rem; }
 .tile h3 { margin: 0 0 .5rem; color: var(--green); font-size: 1.35rem; }
