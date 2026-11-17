@@ -459,6 +459,26 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
+  // ---------------------------------------------------------- concept views
+  // A tile with several images (broad view, close-up) gets buttons to switch.
+  document.querySelectorAll('[data-views]').forEach(function (box) {
+    var views = Array.prototype.slice.call(box.querySelectorAll('[data-view]'));
+    if (views.length < 2) return;
+    var bar = document.createElement('div');
+    bar.className = 'tile__switch';
+    views.forEach(function (v, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = v.getAttribute('data-view');
+      b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function () {
+        views.forEach(function (w, j) { w.hidden = j !== i; });
+        bar.querySelectorAll('button').forEach(function (x, j) { x.setAttribute('aria-pressed', j === i ? 'true' : 'false'); });
+      });
+      bar.appendChild(b);
+    });
+    box.appendChild(bar);
+  });
+
   // ---------------------------------------------------------- lightbox
   // Pinch / scroll-wheel / double-tap to zoom, drag to pan, +/−/Fit buttons.
   var lb = document.querySelector('.lightbox');

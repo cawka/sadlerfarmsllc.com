@@ -152,11 +152,18 @@ const video = {
           </div>
         </article>
         <article class="tile reveal">
-          <a class="tile__media" href={m('concepts/estates-1440.webp')} data-lightbox>
-            <img src={m('concepts/estates-800.webp')} srcset={`${m('concepts/estates-800.webp')} 800w, ${m('concepts/estates-1440.webp')} 1774w`} sizes="(max-width: 760px) 100vw, 50vw"
-                 width="800" height="400" alt="Artist's concept: Waterfront Estates, four lakefront homes above a shared pool and a covered boathouse with boat slips" loading="lazy">
-            <span class="plan__zoom">View larger</span>
-          </a>
+          <div class="tile__views" data-views>
+            <a class="tile__media" href={m('concepts/estates-1440.webp')} data-lightbox data-view="Broad view">
+              <img src={m('concepts/estates-800.webp')} srcset={`${m('concepts/estates-800.webp')} 800w, ${m('concepts/estates-1440.webp')} 1774w`} sizes="(max-width: 760px) 100vw, 50vw"
+                   width="800" height="400" alt="Artist's concept: Waterfront Estates, four lakefront homes above a shared pool and a covered boathouse with boat slips" loading="lazy">
+              <span class="plan__zoom">View larger</span>
+            </a>
+            <a class="tile__media" href={m('concepts/estates-close-1440.webp')} data-lightbox data-view="Close-up" hidden>
+              <img src={m('concepts/estates-close-800.webp')} srcset={`${m('concepts/estates-close-800.webp')} 800w, ${m('concepts/estates-close-1440.webp')} 1672w`} sizes="(max-width: 760px) 100vw, 50vw"
+                   width="800" height="450" alt="Artist's concept: Waterfront Estates close-up, homes on the wooded bluff above Wheeler Lake with a walking path, benches and gardens along the shoreline" loading="lazy">
+              <span class="plan__zoom">View larger</span>
+            </a>
+          </div>
           <div class="tile__body">
             <h3>Waterfront Estates</h3>
             <p>Waterfront Estate Homes and Boat Houses &mdash; An extraordinary vision of luxury lakefront living, featuring breathtaking panoramic views across the widest expanse of Wheeler Lake!</p>
