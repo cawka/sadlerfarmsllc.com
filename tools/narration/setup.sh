@@ -22,4 +22,4 @@ for f in kokoro-v1.0.onnx voices-v1.0.bin; do
   [[ -s models/$f ]] || curl -fL --progress-bar -o "models/$f" "$base/$f"
 done
 
-echo "Ready. Try: tools/narration/say.py \"Hello from Lake Wheeler.\" /tmp/test.wav && afplay /tmp/test.wav"
+echo "Ready. Try: tools/narration/say.py \"Hello from Wheeler Lake.\" /tmp/test.wav && afplay /tmp/test.wav"

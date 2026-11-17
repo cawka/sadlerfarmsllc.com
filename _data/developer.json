@@ -6,9 +6,9 @@
       "title": "Conceptual Lot Layout",
       "image": "assets/site-plans/dev-plan-2.jpg",
       "orient": "portrait",
-      "note": "Illustrative street and lot arrangement for approximately 300 homesites, with waterfront, lake-view and interior lots around preserved open space.",
+      "note": "Illustrative street and lot arrangement, with direct waterfront, lake-view, and interior lots around preserved open space.",
       "web": "dev-plan-2",
-      "pdf_size": "730 KB",
+      "pdf_size": "729 KB",
       "kind": "plan"
     },
     {
@@ -20,7 +20,7 @@
       "orient": "portrait",
       "date": "March 10, 2003",
       "original": "sadler-farms-boundary-survey.pdf",
-      "note": "Signed boundary survey of the property, dated March 10, 2003. Prepared for Sadler Farms LLC by Barge Waggoner Sumner & Cannon (BWSC); Sec. 20, T3S, R6W, Limestone County, Alabama. Original scale 1\" = 200'.",
+      "note": "Signed boundary survey of the property, prepared by Barge Waggoner Sumner & Cannon (BWSC); Sec. 20, T3S, R6W, Limestone County, Alabama. Original scale 1\" = 200'.",
       "no": "2",
       "pdf_size": "1.6 MB"
     },
@@ -45,15 +45,15 @@
     },
     {
       "label": "Size",
-      "value": "Approximately 300 acres"
+      "value": "Almost 300 acres"
     },
     {
       "label": "Waterfront",
-      "value": "More than one mile along the Tennessee River's Wheeler Reservoir, east of the Elk River confluence; portions are direct waterfront and portions are contiguous to vertical TVA bluff land"
+      "value": "More than one mile along the Tennessee River's Wheeler Lake, east of the Elk River confluence; portions are direct waterfront, and portions border narrow TVA buffer zones"
     },
     {
       "label": "Coves",
-      "value": "Two protected coves; one is suitable for possible marina development"
+      "value": "One is possibly suitable for a marina development"
     },
     {
       "label": "Access",
@@ -65,19 +65,19 @@
     },
     {
       "label": "Current use",
-      "value": "Pasture, hay fields and mature hardwood forest; held by one family for more than 70 years"
+      "value": "Row crop farming, currently soybeans and corn, and mature hardwood forest; farmed by one family for almost 80 years"
     },
     {
-      "label": "Concept program",
-      "value": "Approximately 300 homesites (townhomes to one-acre estate lots), a possible community marina, trails and open space"
+      "label": "Concept",
+      "value": "Homesites from townhomes to estate lots, a possible community marina, trails, and open space"
     },
     {
       "label": "Shoreline",
-      "value": "Lake Wheeler is a TVA reservoir; docks and other shoreline structures require TVA Section 26a approval"
+      "value": "Wheeler Lake is a TVA reservoir; all docks, marinas, and other shoreline structures require TVA Section 26a approval"
     },
     {
-      "label": "Zoning & entitlements",
-      "value": "To be confirmed"
+      "label": "Zoning",
+      "value": "Per Limestone County regulations"
     }
   ],
   "disclaimer": "Sadler Farms represents a potential development opportunity. All plans, layouts, uses and renderings are conceptual and illustrative only, are not engineered, and are subject to planning, engineering, governmental approvals and permitting. Acreage, shoreline length and travel times are approximate and should be independently verified.",

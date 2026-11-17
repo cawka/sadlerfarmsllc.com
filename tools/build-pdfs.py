@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build the downloadable PDFs for the developers section of the main page.
 
-Each sheet is a small print-styled HTML page rendered to PDF by headless Chrome:
+Each sheet is a small print-styled HTML page rendered to PDF by headless Chromium:
   assets/downloads/sadler-farms-land-use-concept.pdf
   assets/downloads/sadler-farms-lot-layout.pdf
   assets/downloads/sadler-farms-topography.pdf
@@ -15,13 +15,18 @@ there for the download links in index.html (#developers).
 import datetime
 import html
 import json
+import os
 import pathlib
 import subprocess
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "assets" / "downloads"
-CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+# Playwright's own Chromium (`npx playwright install chromium`), not the installed
+# Google Chrome: launching that from a script trips a macOS security alert.
+CHROME = os.environ.get("CHROME") or str(max(pathlib.Path.home().glob(
+    "Library/Caches/ms-playwright/chromium-*/chrome-mac*/Google Chrome for Testing.app/"
+    "Contents/MacOS/Google Chrome for Testing")))
 ISSUED = datetime.date.today().strftime("%B %Y")
 
 # Site facts, sheet list and disclaimer are shared with index.html (#developers).
@@ -79,7 +84,7 @@ def title_block(sheet, total):
         flag = f'<span class="flag">CONCEPTUAL &mdash; NOT FOR CONSTRUCTION. NOT A SURVEY.</span> {DISCLAIMER}'
     return f"""
 <div class="block">
-  <div><div class="brand">Sadler Farms<small>Lake Wheeler &middot; Limestone County, AL</small></div></div>
+  <div><div class="brand">Sadler Farms<small>Wheeler Lake &middot; Limestone County, AL</small></div></div>
   <div>
     <div class="sheet-title">{html.escape(sheet['title'])}</div>
     {html.escape(sheet['note'])}
@@ -108,7 +113,7 @@ def cover_page():
     <img src="{photo}" alt="">
     <p class="eyebrow" style="margin-top:.3in">Developer &amp; builder package</p>
     <h1>Sadler Farms</h1>
-    <h2>A lakeside development opportunity on Lake Wheeler</h2>
+    <h2>A lakeside development opportunity on Wheeler Lake</h2>
   </div>
   <div class="contents">
     <div class="eyebrow">Contents</div>
