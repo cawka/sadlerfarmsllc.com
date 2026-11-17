@@ -4,9 +4,9 @@
   "voice": "am_onyx (Kokoro TTS v1.0), speed 0.95, matter-of-fact",
   "clips": [
     {"file": "01.flac", "start": 2.50,
-     "text": "Sadler Farms: a three-hundred-acre waterfront development opportunity on Lake Wheeler, on the Tennessee River in North Alabama."},
-    {"file": "02.flac", "start": 10.55,
-     "text": "Held by one family for more than seventy years, the land combines mature forest, rolling open fields, and more than a mile of shoreline, with two natural coves, one suitable for a future community marina."},
+     "text": "Sadler Farms: almost three hundred acres of waterfront development opportunity on Wheeler Lake, on the Tennessee River in North Alabama."},
+    {"file": "02.flac", "start": 10.85,
+     "text": "Farmed by one family for almost eighty years, the land combines mature forest, open fields, and more than a mile of shoreline, with several protected coves, one possibly suitable for a marina."},
     {"file": "03.flac", "start": 22.96,
      "text": "The property faces one of the widest stretches of Wheeler Lake, Alabama's second-largest reservoir."},
     {"file": "04.flac", "start": 29.52,

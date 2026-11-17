@@ -139,7 +139,8 @@ def render(pages, out):
     with tempfile.NamedTemporaryFile("w", suffix=".html", delete=False) as f:
         f.write(doc)
         src = f.name
-    subprocess.run([CHROME, "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
+    # --use-mock-keychain: otherwise Chromium reads the macOS login keychain at start.
+    subprocess.run([CHROME, "--headless=new", "--use-mock-keychain", "--disable-gpu", "--no-pdf-header-footer",
                     "--allow-file-access-from-files", f"--print-to-pdf={out}",
                     pathlib.Path(src).as_uri()],
                    check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
