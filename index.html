@@ -17,6 +17,8 @@ video:
 {% assign ph = '/assets/media/photos/' | relative_url %}
 {% assign vid = '/assets/media/video/' | relative_url %}
 {% assign cx = '/assets/media/concepts/' | relative_url %}
+{% comment %} Bumped on every build so replaced concept images aren't served from browser caches. {% endcomment %}
+{% assign cv = site.time | date: '%s' %}
 {% assign d = site.data.developer %}
 {% assign plans = '/assets/media/plans/' | relative_url %}
 {% assign dl = '/assets/downloads/' | relative_url %}
@@ -123,7 +125,7 @@ video:
         <p class="section__intro">Drag the slider to compare the land as it is today with an artist&rsquo;s concept of what it could become. Double-tap or use the corner button for a full-screen view you can zoom.</p>
       </div>
       <div class="reveal">
-        {% capture before %}{{ ph }}41-1600.webp{% endcapture %}{% capture after %}{{ cx }}overview-1440.webp{% endcapture %}
+        {% capture before %}{{ ph }}41-1600.webp{% endcapture %}{% capture after %}{{ cx }}overview-1440.webp?v={{ cv }}{% endcapture %}
         {% include compare.html start="40" before_large=before after_large=after before=before before_w="1600" before_h="1198" before_alt="Sadler Farms today: pasture, forest and Wheeler Lake"
            after=after after_w="1449" after_h="1085" after_alt="Artist's concept: homes, a marina and trails set into the same landscape" %}
       </div>
@@ -140,8 +142,8 @@ video:
       </div>
       <div class="grid grid--2">
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}marina-1440.webp" data-lightbox>
-            <img src="{{ cx }}marina-800.webp" srcset="{{ cx }}marina-800.webp 800w, {{ cx }}marina-1440.webp 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href="{{ cx }}marina-1440.webp?v={{ cv }}" data-lightbox>
+            <img src="{{ cx }}marina-800.webp?v={{ cv }}" srcset="{{ cx }}marina-800.webp?v={{ cv }} 800w, {{ cx }}marina-1440.webp?v={{ cv }} 1670w" sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="451" alt="Artist's concept board: The Cove Inn marina, boat ramp and dry-stack storage at the head of the cove, with duplex townhomes along both banks" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
@@ -151,8 +153,8 @@ video:
           </div>
         </article>
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}estates-1440.webp" data-lightbox>
-            <img src="{{ cx }}estates-800.webp" srcset="{{ cx }}estates-800.webp 800w, {{ cx }}estates-1440.webp 1774w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href="{{ cx }}estates-1440.webp?v={{ cv }}" data-lightbox>
+            <img src="{{ cx }}estates-800.webp?v={{ cv }}" srcset="{{ cx }}estates-800.webp?v={{ cv }} 800w, {{ cx }}estates-1440.webp?v={{ cv }} 1774w" sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="400" alt="Artist's concept: Waterfront Estates, four lakefront homes above a shared pool and a covered boathouse with boat slips" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
@@ -162,8 +164,8 @@ video:
           </div>
         </article>
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}riverview-1440.webp" data-lightbox>
-            <img src="{{ cx }}riverview-800.webp" srcset="{{ cx }}riverview-800.webp 800w, {{ cx }}riverview-1440.webp 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href="{{ cx }}riverview-1440.webp?v={{ cv }}" data-lightbox>
+            <img src="{{ cx }}riverview-800.webp?v={{ cv }}" srcset="{{ cx }}riverview-800.webp?v={{ cv }} 800w, {{ cx }}riverview-1440.webp?v={{ cv }} 1670w" sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="451" alt="Artist's concept board: Riverview Residences, three condominium buildings with pools and gazebos facing the lake" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
@@ -173,8 +175,8 @@ video:
           </div>
         </article>
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}nature-1440.webp" data-lightbox>
-            <img src="{{ cx }}nature-800.webp" srcset="{{ cx }}nature-800.webp 800w, {{ cx }}nature-1440.webp 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href="{{ cx }}nature-1440.webp?v={{ cv }}" data-lightbox>
+            <img src="{{ cx }}nature-800.webp?v={{ cv }}" srcset="{{ cx }}nature-800.webp?v={{ cv }} 800w, {{ cx }}nature-1440.webp?v={{ cv }} 1670w" sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="451" alt="Artist's concept board: Estates in Nature master plan, with one-acre estate lots along winding roads, ponds and preserved forest above Wheeler Lake" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
