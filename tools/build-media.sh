@@ -55,7 +55,7 @@ build_photos() {
 
 # ---------------------------------------------------------------- concepts
 # Artist's-concept images made in ChatGPT: overview (from photo 41) and the
-# client's residence boards (marina, estates, riverview, nature). The large
+# client's residence boards (marina, estates, riverview, ranch). The large
 # version keeps the native size and a higher quality so the boards' text reads.
 # Sources live in assets/concepts/ (committed, excluded from the site build).
 build_concepts() {
