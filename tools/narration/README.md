@@ -95,4 +95,4 @@ A Kevin MacLeod bed is the song's first 56 s crossfaded (2 s) into its last
 Adding a new soundtrack: put its bed in `beds/`, add it to `beds` in
 `narration.json` (gain ≈ 3 puts the compressed bed at about −29 dB), to
 `SOUNDTRACKS` in `tools/build-media.sh`, and to the `#soundtracks` list (with its
-credit) in `index.html`. Then `mix.py <id>` and `build-media.sh film`.
+credit) in `src/layouts/Default.astro`. Then `mix.py <id>` and `build-media.sh film`.

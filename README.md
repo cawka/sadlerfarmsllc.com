@@ -1,29 +1,36 @@
 # sadlerfarmsllc.com
 
 Static landing page for **Sadler Farms LLC** (Alabama), built with
-[Jekyll](https://jekyllrb.com/) and deployed to GitHub Pages via GitHub Actions.
+[Astro](https://astro.build/) and deployed to GitHub Pages via GitHub Actions.
 
 ## Local preview
 
 ```bash
-bundle install
-bundle exec jekyll serve
-# open http://localhost:4000
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # static site in dist/
 ```
 
 ## Structure
 
 | Path | Purpose |
 |------|---------|
-| `index.html` | The landing page content |
-| `_layouts/default.html` | Page shell (head, SEO/structured data, footer, scripts) |
-| `assets/css/style.scss` | Styles (compiled by Jekyll's Sass) |
-| `assets/js/site.js` | HLS streaming player (hls.js), sound/quality controls, lightbox |
-| `assets/media/` | Web-sized photos (WebP) and HLS video, generated — don't edit by hand |
-| `assets/audio/film.m4a` | Film soundtrack (see `assets/audio/README.md`) |
-| `tools/build-media.sh` | Regenerates `assets/media/` from the raw drone files |
-| `CNAME` | Custom domain for GitHub Pages |
-| `.github/workflows/jekyll.yml` | Build + deploy workflow |
+| `src/pages/index.astro` | The landing page content |
+| `src/pages/developers.astro` | Redirect from the old /developers/ page |
+| `src/layouts/Default.astro` | Page shell (head, SEO/structured data, footer, scripts) |
+| `src/components/` | Before/after slider, lightbox, inline SVGs |
+| `src/data/developer.json` | Site facts and plan/survey sheets (shared with `tools/build-pdfs.py`) |
+| `src/styles/style.scss` | Styles |
+| `src/scripts/site.js` | HLS streaming player (hls.js), sound/quality controls, sliders, lightbox |
+| `src/media.ts` | `m('photos/41-800.webp')`: hashed URL for an image in `assets/media/` |
+| `assets/media/` | Web-sized photos, concept images and plans (WebP), generated — don't edit by hand |
+| `public/` | Served as-is at fixed URLs: HLS video, PDF downloads, favicon, OG image, CNAME |
+| `tools/build-media.sh` | Regenerates `assets/media/` and `public/assets/media/video/` from the raw files |
+| `.github/workflows/deploy.yml` | Build + deploy workflow |
+
+Images, the stylesheet and the script get content-hashed file names
+(`/_astro/<name>.<hash>.webp`), so a replaced file always gets a new URL and
+browsers never show a stale copy. Videos and PDFs keep fixed URLs.
 
 ## Media
 
@@ -35,7 +42,7 @@ the client's Google Drive folder (`gdown --folder <url> -O assets/videos`).
 
 * photos → `assets/media/photos/<n>-{800,1600}.webp`
 * film (hero montage with soundtrack) and silent section loops →
-  `assets/media/video/<name>/master.m3u8` — adaptive HLS in 360p/540p/720p
+  `public/assets/media/video/<name>/master.m3u8` — adaptive HLS in 360p/540p/720p
   (quality auto-selected; viewers can override it in the player).
 
 Shot lists (which clips / in-points) are arrays at the top of the script.

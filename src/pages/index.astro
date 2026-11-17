@@ -1,36 +1,36 @@
 ---
-layout: default
-title: Sadler Farms — Lakeside Living on Wheeler Lake
-description: >-
-  Sadler Farms: almost 300 acres with more than a mile of waterfront on Wheeler Lake and the
-  Tennessee River in Limestone County, Alabama — a vision for lakeside living, with site
-  facts, conceptual plans and surveys for developers and builders.
-preload_image: /assets/media/video/pitch/poster.jpg
-video:
-  name: Sadler Farms — a waterfront development opportunity on Wheeler Lake
-  description: A 45-second drone film of Sadler Farms, almost 300 acres with more than a mile of shoreline on Wheeler Lake (Tennessee River) in Limestone County, Alabama, for prospective development partners.
-  thumbnail: /assets/media/video/pitch/poster.jpg
-  content: /assets/media/video/pitch/master.m3u8
-  upload_date: 2026-10-23
-  duration: PT45S
----
-{% assign ph = '/assets/media/photos/' | relative_url %}
-{% assign vid = '/assets/media/video/' | relative_url %}
-{% assign cx = '/assets/media/concepts/' | relative_url %}
-{% comment %} Bumped on every build so replaced concept images aren't served from browser caches. {% endcomment %}
-{% assign cv = site.time | date: '%s' %}
-{% assign d = site.data.developer %}
-{% assign plans = '/assets/media/plans/' | relative_url %}
-{% assign dl = '/assets/downloads/' | relative_url %}
+import Default from '../layouts/Default.astro';
+import Compare from '../components/Compare.astro';
+import Lightbox from '../components/Lightbox.astro';
+import cotton from '../components/cotton.svg?raw';
+import locationIllustration from '../components/location-illustration.svg?raw';
+import d from '../data/developer.json';
+import { m } from '../media';
 
+const dl = '/assets/downloads/';
+const video = {
+  name: 'Sadler Farms — a waterfront development opportunity on Wheeler Lake',
+  description: 'A 45-second drone film of Sadler Farms, almost 300 acres with more than a mile of shoreline on Wheeler Lake (Tennessee River) in Limestone County, Alabama, for prospective development partners.',
+  thumbnail: '/assets/media/video/pitch/poster.jpg',
+  content: '/assets/media/video/pitch/master.m3u8',
+  uploadDate: '2026-10-23',
+  duration: 'PT45S',
+};
+---
+<Default
+  title="Sadler Farms — Lakeside Living on Wheeler Lake"
+  description="Sadler Farms: almost 300 acres with more than a mile of waterfront on Wheeler Lake and the Tennessee River in Limestone County, Alabama — a vision for lakeside living, with site facts, conceptual plans and surveys for developers and builders."
+  preloadImage="/assets/media/video/pitch/poster.jpg"
+  video={video}
+>
 <header class="hero hero--video" id="top">
   <div class="hero__media">
-    <video class="js-hls hero__video" data-src="{{ vid }}pitch/master.m3u8"
-           poster="{{ vid }}pitch/poster.jpg" autoplay muted loop playsinline preload="auto"></video>
+    <video class="js-hls hero__video" data-src="/assets/media/video/pitch/master.m3u8"
+           poster="/assets/media/video/pitch/poster.jpg" autoplay muted loop playsinline preload="auto"></video>
   </div>
 
   <nav class="nav">
-    <a class="nav__brand" href="#top"><span class="nav__mark">{% include cotton.svg %}</span> Sadler Farms</a>
+    <a class="nav__brand" href="#top"><span class="nav__mark"><Fragment set:html={cotton} /></span> Sadler Farms</a>
     <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
@@ -110,7 +110,7 @@ video:
         <p class="note">Concept only — subject to planning, engineering, and approvals.</p>
       </div>
       <figure class="split__media reveal">
-        <img src="{{ ph }}41-1600.webp" width="1600" height="1198" srcset="{{ ph }}41-800.webp 800w, {{ ph }}41-1600.webp 1600w"
+        <img src={m('photos/41-1600.webp')} width="1600" height="1198" srcset={`${m('photos/41-800.webp')} 800w, ${m('photos/41-1600.webp')} 1600w`}
              sizes="(max-width: 860px) 100vw, 55vw" alt="Open pasture and tree islands with Wheeler Lake beyond" loading="lazy">
       </figure>
     </div>
@@ -125,9 +125,8 @@ video:
         <p class="section__intro">Drag the slider to compare the land as it is today with an artist&rsquo;s concept of what it could become. Double-tap or use the corner button for a full-screen view you can zoom.</p>
       </div>
       <div class="reveal">
-        {% capture before %}{{ ph }}41-1600.webp{% endcapture %}{% capture after %}{{ cx }}overview-1440.webp?v={{ cv }}{% endcapture %}
-        {% include compare.html start="40" before_large=before after_large=after before=before before_w="1600" before_h="1198" before_alt="Sadler Farms today: pasture, forest and Wheeler Lake"
-           after=after after_w="1449" after_h="1085" after_alt="Artist's concept: homes, a marina and trails set into the same landscape" %}
+        <Compare start="40" before={m('photos/41-1600.webp')} beforeLarge={m('photos/41-1600.webp')} beforeW="1600" beforeH="1198" beforeAlt="Sadler Farms today: pasture, forest and Wheeler Lake"
+          after={m('concepts/overview-1440.webp')} afterLarge={m('concepts/overview-1440.webp')} afterW="1449" afterH="1085" afterAlt="Artist's concept: homes, a marina and trails set into the same landscape" />
       </div>
     </div>
   </section>
@@ -142,8 +141,8 @@ video:
       </div>
       <div class="grid grid--2">
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}marina-1440.webp?v={{ cv }}" data-lightbox>
-            <img src="{{ cx }}marina-800.webp?v={{ cv }}" srcset="{{ cx }}marina-800.webp?v={{ cv }} 800w, {{ cx }}marina-1440.webp?v={{ cv }} 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href={m('concepts/marina-1440.webp')} data-lightbox>
+            <img src={m('concepts/marina-800.webp')} srcset={`${m('concepts/marina-800.webp')} 800w, ${m('concepts/marina-1440.webp')} 1670w`} sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="451" alt="Artist's concept board: The Cove Inn marina, boat ramp and dry-stack storage at the head of the cove, with duplex townhomes along both banks" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
@@ -153,8 +152,8 @@ video:
           </div>
         </article>
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}estates-1440.webp?v={{ cv }}" data-lightbox>
-            <img src="{{ cx }}estates-800.webp?v={{ cv }}" srcset="{{ cx }}estates-800.webp?v={{ cv }} 800w, {{ cx }}estates-1440.webp?v={{ cv }} 1774w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href={m('concepts/estates-1440.webp')} data-lightbox>
+            <img src={m('concepts/estates-800.webp')} srcset={`${m('concepts/estates-800.webp')} 800w, ${m('concepts/estates-1440.webp')} 1774w`} sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="400" alt="Artist's concept: Waterfront Estates, four lakefront homes above a shared pool and a covered boathouse with boat slips" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
@@ -164,8 +163,8 @@ video:
           </div>
         </article>
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}riverview-1440.webp?v={{ cv }}" data-lightbox>
-            <img src="{{ cx }}riverview-800.webp?v={{ cv }}" srcset="{{ cx }}riverview-800.webp?v={{ cv }} 800w, {{ cx }}riverview-1440.webp?v={{ cv }} 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href={m('concepts/riverview-1440.webp')} data-lightbox>
+            <img src={m('concepts/riverview-800.webp')} srcset={`${m('concepts/riverview-800.webp')} 800w, ${m('concepts/riverview-1440.webp')} 1670w`} sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="451" alt="Artist's concept board: Riverview Residences, three condominium buildings with pools and gazebos facing the lake" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
@@ -175,8 +174,8 @@ video:
           </div>
         </article>
         <article class="tile reveal">
-          <a class="tile__media" href="{{ cx }}nature-1440.webp?v={{ cv }}" data-lightbox>
-            <img src="{{ cx }}nature-800.webp?v={{ cv }}" srcset="{{ cx }}nature-800.webp?v={{ cv }} 800w, {{ cx }}nature-1440.webp?v={{ cv }} 1670w" sizes="(max-width: 760px) 100vw, 50vw"
+          <a class="tile__media" href={m('concepts/nature-1440.webp')} data-lightbox>
+            <img src={m('concepts/nature-800.webp')} srcset={`${m('concepts/nature-800.webp')} 800w, ${m('concepts/nature-1440.webp')} 1670w`} sizes="(max-width: 760px) 100vw, 50vw"
                  width="800" height="451" alt="Artist's concept board: Estates in Nature master plan, with one-acre estate lots along winding roads, ponds and preserved forest above Wheeler Lake" loading="lazy">
             <span class="plan__zoom">View larger</span>
           </a>
@@ -192,8 +191,8 @@ video:
 
   <!-- ============================================================ Waterfront -->
   <section class="feature" id="waterfront">
-    <video class="js-hls feature__video" data-src="{{ vid }}waterfront/master.m3u8"
-           poster="{{ vid }}waterfront/poster.jpg" muted loop playsinline preload="none"></video>
+    <video class="js-hls feature__video" data-src="/assets/media/video/waterfront/master.m3u8"
+           poster="/assets/media/video/waterfront/poster.jpg" muted loop playsinline preload="none"></video>
     <div class="feature__content wrap">
       <div class="feature__card reveal">
         <p class="eyebrow">An extraordinary waterfront setting</p>
@@ -239,7 +238,7 @@ video:
         <p class="note">Marina features, capacity, and locations are subject to engineering, permitting, and regulatory approval.</p>
       </div>
       <div class="split__media split__media--video reveal">
-        <video class="js-hls" data-src="{{ vid }}cove/master.m3u8" poster="{{ vid }}cove/poster.jpg"
+        <video class="js-hls" data-src="/assets/media/video/cove/master.m3u8" poster="/assets/media/video/cove/poster.jpg"
                muted loop playsinline preload="none" aria-label="Drone footage of a sheltered cove"></video>
       </div>
     </div>
@@ -247,8 +246,8 @@ video:
 
   <!-- ============================================================ Land & legacy -->
   <section class="feature feature--right" id="land">
-    <video class="js-hls feature__video" data-src="{{ vid }}meadow/master.m3u8"
-           poster="{{ vid }}meadow/poster.jpg" muted loop playsinline preload="none"></video>
+    <video class="js-hls feature__video" data-src="/assets/media/video/meadow/master.m3u8"
+           poster="/assets/media/video/meadow/poster.jpg" muted loop playsinline preload="none"></video>
     <div class="feature__content wrap">
       <div class="feature__card reveal">
         <p class="eyebrow">A landscape preserved for generations</p>
@@ -297,7 +296,7 @@ video:
         </div>
       </div>
       <figure class="location__illus reveal">
-        {% include location-illustration.svg %}
+        <Fragment set:html={locationIllustration} />
       </figure>
     </div>
   </section>
@@ -310,50 +309,50 @@ video:
         <h2 class="section__title">Gallery</h2>
       </div>
       <div class="gallery">
-        <a class="gallery__item reveal" href="{{ ph }}43-1600.webp">
-          <img src="{{ ph }}43-800.webp" width="800" height="599" alt="Wide fields sloping toward Wheeler Lake" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/43-1600.webp')}>
+          <img src={m('photos/43-800.webp')} width="800" height="599" alt="Wide fields sloping toward Wheeler Lake" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}5-1600.webp">
-          <img src="{{ ph }}5-800.webp" width="800" height="599" alt="Mature forests and meadows along the lake" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/5-1600.webp')}>
+          <img src={m('photos/5-800.webp')} width="800" height="599" alt="Mature forests and meadows along the lake" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}30-1600.webp">
-          <img src="{{ ph }}30-800.webp" width="800" height="599" alt="Meadow hidden in mature forest" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/30-1600.webp')}>
+          <img src={m('photos/30-800.webp')} width="800" height="599" alt="Meadow hidden in mature forest" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}59-1600.webp">
-          <img src="{{ ph }}59-800.webp" width="800" height="599" alt="Wooded shoreline on a wide stretch of the lake" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/59-1600.webp')}>
+          <img src={m('photos/59-800.webp')} width="800" height="599" alt="Wooded shoreline on a wide stretch of the lake" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}25-1600.webp">
-          <img src="{{ ph }}25-800.webp" width="800" height="599" alt="Boat cruising past the wooded shoreline" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/25-1600.webp')}>
+          <img src={m('photos/25-800.webp')} width="800" height="599" alt="Boat cruising past the wooded shoreline" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}44-1600.webp">
-          <img src="{{ ph }}44-800.webp" width="800" height="599" alt="Farm pond among open fields" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/44-1600.webp')}>
+          <img src={m('photos/44-800.webp')} width="800" height="599" alt="Farm pond among open fields" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}7-1600.webp">
-          <img src="{{ ph }}7-800.webp" width="800" height="599" alt="Fields and forest with the lake beyond" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/7-1600.webp')}>
+          <img src={m('photos/7-800.webp')} width="800" height="599" alt="Fields and forest with the lake beyond" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}28-1600.webp">
-          <img src="{{ ph }}28-800.webp" width="800" height="599" alt="Quiet inlet between wooded banks" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/28-1600.webp')}>
+          <img src={m('photos/28-800.webp')} width="800" height="599" alt="Quiet inlet between wooded banks" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}48-1600.webp">
-          <img src="{{ ph }}48-800.webp" width="800" height="599" alt="Open field above the lake" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/48-1600.webp')}>
+          <img src={m('photos/48-800.webp')} width="800" height="599" alt="Open field above the lake" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}61-1600.webp">
-          <img src="{{ ph }}61-800.webp" width="800" height="599" alt="Wooded point on Wheeler Lake" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/61-1600.webp')}>
+          <img src={m('photos/61-800.webp')} width="800" height="599" alt="Wooded point on Wheeler Lake" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}53-1600.webp">
-          <img src="{{ ph }}53-800.webp" width="800" height="599" alt="Forest and meadow with lake views" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/53-1600.webp')}>
+          <img src={m('photos/53-800.webp')} width="800" height="599" alt="Forest and meadow with lake views" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}13-1600.webp">
-          <img src="{{ ph }}13-800.webp" width="800" height="599" alt="Mature hardwoods along the shoreline" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/13-1600.webp')}>
+          <img src={m('photos/13-800.webp')} width="800" height="599" alt="Mature hardwoods along the shoreline" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}27-1600.webp">
-          <img src="{{ ph }}27-800.webp" width="800" height="599" alt="Protected cove off the main lake" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/27-1600.webp')}>
+          <img src={m('photos/27-800.webp')} width="800" height="599" alt="Protected cove off the main lake" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}12-1600.webp">
-          <img src="{{ ph }}12-800.webp" width="800" height="599" alt="Peninsula of mature forest on the water" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/12-1600.webp')}>
+          <img src={m('photos/12-800.webp')} width="800" height="599" alt="Peninsula of mature forest on the water" loading="lazy">
         </a>
-        <a class="gallery__item reveal" href="{{ ph }}56-1600.webp">
-          <img src="{{ ph }}56-800.webp" width="800" height="599" alt="Pasture and tree lines above the lake" loading="lazy">
+        <a class="gallery__item reveal" href={m('photos/56-1600.webp')}>
+          <img src={m('photos/56-800.webp')} width="800" height="599" alt="Pasture and tree lines above the lake" loading="lazy">
         </a>
       </div>
     </div>
@@ -370,9 +369,9 @@ video:
         surveys for planning and due diligence &mdash; each available as a PDF.
       </p>
       <div class="hero__actions">
-        <a class="btn" href="{{ dl }}sadler-farms-developer-package.pdf" download>
+        <a class="btn" href="/assets/downloads/sadler-farms-developer-package.pdf" download>
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M5 20h14v-2H5v2zM12 16l5.5-5.5-1.4-1.4L13 12.2V3h-2v9.2L7.9 9.1 6.5 10.5 12 16z"/></svg>
-          Developer package (PDF, {{ d.package_size }})
+          Developer package (PDF, {d.package_size})
         </a>
       </div>
     </div>
@@ -386,9 +385,9 @@ video:
         <h2 class="section__title">The property at a glance.</h2>
       </div>
       <dl class="facts reveal">
-        {% for f in d.facts %}
-        <div class="facts__row"><dt>{{ f.label }}</dt><dd>{{ f.value }}</dd></div>
-        {% endfor %}
+        {d.facts.map((f) => (
+        <div class="facts__row"><dt>{f.label}</dt><dd>{f.value}</dd></div>
+        ))}
       </dl>
       <p class="note note--center">Approximate; to be verified during due diligence.</p>
     </div>
@@ -402,23 +401,23 @@ video:
         <h2 class="section__title">One way the land could come together.</h2>
         <p class="section__intro">Illustrative concepts to frame discussion &mdash; not engineered, surveyed or approved.</p>
       </div>
-      {% for s in d.sheets %}{% if s.kind != "survey" %}
+      {d.sheets.filter((s) => s.kind !== 'survey').map((s) => (
       <article class="plan reveal">
-        <a class="plan__media" href="{{ plans }}{{ s.web }}-full.webp" data-lightbox>
-          <img src="{{ plans }}{{ s.web }}-800.webp" width="800" height="731" alt="{{ s.title }}" loading="lazy">
+        <a class="plan__media" href={m(`plans/${s.web}-full.webp`)} data-lightbox>
+          <img src={m(`plans/${s.web}-800.webp`)} width="800" height="731" alt={s.title} loading="lazy">
           <span class="plan__zoom">View larger</span>
         </a>
         <div class="plan__body">
-          <p class="eyebrow">Sheet {{ s.no }}</p>
-          <h3>{{ s.title }}</h3>
-          <p>{{ s.note }}</p>
+          <p class="eyebrow">Sheet {s.no}</p>
+          <h3>{s.title}</h3>
+          <p>{s.note}</p>
           <div class="plan__actions">
-            <a class="btn btn--small" href="{{ dl }}sadler-farms-{{ s.slug }}.pdf" download>Download PDF &middot; {{ s.pdf_size }}</a>
-            <a class="link" href="{{ plans }}{{ s.web }}-full.webp" target="_blank" rel="noopener">Open full size</a>
+            <a class="btn btn--small" href={`${dl}sadler-farms-${s.slug}.pdf`} download>Download PDF &middot; {s.pdf_size}</a>
+            <a class="link" href={m(`plans/${s.web}-full.webp`)} target="_blank" rel="noopener">Open full size</a>
           </div>
         </div>
       </article>
-      {% endif %}{% endfor %}
+      ))}
     </div>
   </section>
 
@@ -430,23 +429,23 @@ video:
         <h2 class="section__title">Boundary and topographic survey.</h2>
         <p class="section__intro">Prepared for Sadler Farms LLC by Barge Waggoner Sumner &amp; Cannon (BWSC). The signed, full-size surveys (42&nbsp;&times;&nbsp;30&nbsp;in) are available below as PDFs.</p>
       </div>
-      {% for s in d.sheets %}{% if s.kind == "survey" %}
+      {d.sheets.filter((s) => s.kind === 'survey').map((s) => (
       <article class="plan plan--portrait reveal">
-        <a class="plan__media" href="{{ plans }}{{ s.web }}-full.webp" data-lightbox>
-          <img src="{{ plans }}{{ s.web }}-800.webp" width="800" height="1116" alt="{{ s.title }}, {{ s.date }}" loading="lazy">
+        <a class="plan__media" href={m(`plans/${s.web}-full.webp`)} data-lightbox>
+          <img src={m(`plans/${s.web}-800.webp`)} width="800" height="1116" alt={`${s.title}, ${s.date}`} loading="lazy">
           <span class="plan__zoom">View larger</span>
         </a>
         <div class="plan__body">
-          <p class="eyebrow">Survey &middot; {{ s.date }}</p>
-          <h3>{{ s.title }}</h3>
-          <p>{{ s.note }}</p>
+          <p class="eyebrow">Survey &middot; {s.date}</p>
+          <h3>{s.title}</h3>
+          <p>{s.note}</p>
           <div class="plan__actions">
-            <a class="btn btn--small" href="{{ dl }}{{ s.original }}" download>Download signed survey &middot; {{ s.pdf_size }}</a>
-            <a class="link" href="{{ plans }}{{ s.web }}-full.webp" target="_blank" rel="noopener">Open full size</a>
+            <a class="btn btn--small" href={`${dl}${s.original}`} download>Download signed survey &middot; {s.pdf_size}</a>
+            <a class="link" href={m(`plans/${s.web}-full.webp`)} target="_blank" rel="noopener">Open full size</a>
           </div>
         </div>
       </article>
-      {% endif %}{% endfor %}
+      ))}
     </div>
   </section>
 
@@ -460,19 +459,19 @@ video:
       <ul class="docs reveal">
         <li class="docs__item docs__item--main">
           <div><strong>Developer package</strong><span>Cover, site facts, lot layout and reduced copies of the surveys</span></div>
-          <a class="btn btn--small" href="{{ dl }}sadler-farms-developer-package.pdf" download>PDF &middot; {{ d.package_size }}</a>
+          <a class="btn btn--small" href="/assets/downloads/sadler-farms-developer-package.pdf" download>PDF &middot; {d.package_size}</a>
         </li>
-        {% for s in d.sheets %}
+        {d.sheets.map((s) => (
         <li class="docs__item">
-          {% if s.kind == "survey" %}
-          <div><strong>{{ s.title }}</strong><span>Signed survey, {{ s.date }} &middot; full size, 42 &times; 30 in</span></div>
-          <a class="btn btn--small btn--outline" href="{{ dl }}{{ s.original }}" download>PDF &middot; {{ s.pdf_size }}</a>
-          {% else %}
-          <div><strong>{{ s.title }}</strong><span>Conceptual &middot; letter, {{ s.orient }}</span></div>
-          <a class="btn btn--small btn--outline" href="{{ dl }}sadler-farms-{{ s.slug }}.pdf" download>PDF &middot; {{ s.pdf_size }}</a>
-          {% endif %}
+          {s.kind === 'survey' ? (<Fragment>
+          <div><strong>{s.title}</strong><span>Signed survey, {s.date} &middot; full size, 42 &times; 30 in</span></div>
+          <a class="btn btn--small btn--outline" href={`${dl}${s.original}`} download>PDF &middot; {s.pdf_size}</a>
+          </Fragment>) : (<Fragment>
+          <div><strong>{s.title}</strong><span>Conceptual &middot; letter, {s.orient}</span></div>
+          <a class="btn btn--small btn--outline" href={`${dl}sadler-farms-${s.slug}.pdf`} download>PDF &middot; {s.pdf_size}</a>
+          </Fragment>)}
         </li>
-        {% endfor %}
+        ))}
       </ul>
     </div>
   </section>
@@ -502,4 +501,5 @@ video:
   <div class="compare-modal__body"></div>
 </div>
 
-{% include lightbox.html %}
+<Lightbox />
+</Default>

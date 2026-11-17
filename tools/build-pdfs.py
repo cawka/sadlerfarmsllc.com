@@ -2,15 +2,13 @@
 """Build the downloadable PDFs for the developers section of the main page.
 
 Each sheet is a small print-styled HTML page rendered to PDF by headless Chromium:
-  assets/downloads/sadler-farms-land-use-concept.pdf
-  assets/downloads/sadler-farms-lot-layout.pdf
-  assets/downloads/sadler-farms-topography.pdf
-  assets/downloads/sadler-farms-developer-package.pdf   (cover + facts + all sheets)
+  public/assets/downloads/sadler-farms-lot-layout.pdf
+  public/assets/downloads/sadler-farms-developer-package.pdf   (cover + facts + all sheets)
 
 Usage: tools/build-pdfs.py
-Sources: assets/site-plans/*.jpg, assets/img/hero.jpg (cover).
-Facts and sheets come from _data/developer.json; file sizes are written back
-there for the download links in index.html (#developers).
+Sources: assets/site-plans/*.jpg, public/assets/img/hero.jpg (cover).
+Facts and sheets come from src/data/developer.json; file sizes are written back
+there for the download links in src/pages/index.astro (#developers).
 """
 import datetime
 import html
@@ -21,7 +19,7 @@ import subprocess
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-OUT = ROOT / "assets" / "downloads"
+OUT = ROOT / "public" / "assets" / "downloads"
 # Playwright's own Chromium (`npx playwright install chromium`), not the installed
 # Google Chrome: launching that from a script trips a macOS security alert.
 CHROME = os.environ.get("CHROME") or str(max(pathlib.Path.home().glob(
@@ -29,8 +27,8 @@ CHROME = os.environ.get("CHROME") or str(max(pathlib.Path.home().glob(
     "Contents/MacOS/Google Chrome for Testing")))
 ISSUED = datetime.date.today().strftime("%B %Y")
 
-# Site facts, sheet list and disclaimer are shared with index.html (#developers).
-DATA_FILE = ROOT / "_data" / "developer.json"
+# Site facts, sheet list and disclaimer are shared with src/pages/index.astro (#developers).
+DATA_FILE = ROOT / "src" / "data" / "developer.json"
 DATA = json.loads(DATA_FILE.read_text())
 SHEETS = DATA["sheets"]
 FACTS = [(html.escape(f["label"]), html.escape(f["value"])) for f in DATA["facts"]]
@@ -105,7 +103,7 @@ def sheet_page(sheet, total):
 
 
 def cover_page():
-    photo = (ROOT / "assets/img/hero.jpg").as_uri()
+    photo = (ROOT / "public/assets/img/hero.jpg").as_uri()
     items = "".join(f"<div>Sheet {s['no']} &mdash; {html.escape(s['title'])}</div>" for s in SHEETS)
     return f"""
 <section class="page cover">

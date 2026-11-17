@@ -12,7 +12,8 @@ cd "$(dirname "$0")/.."
 
 SRC_PHOTOS=assets/photos
 SRC_VIDEOS=assets/videos
-OUT=assets/media
+OUT=assets/media            # images: Astro gives them hashed names at build time
+VID=public/assets/media/video  # HLS videos keep fixed URLs
 TMP=${TMPDIR:-/tmp}/sadler-media
 mkdir -p "$TMP"
 
@@ -49,7 +50,7 @@ build_photos() {
     done
   done
   # Social/OG image (JPEG for crawler compatibility)
-  magick "$SRC_PHOTOS/SadlerFarms_083026_AerialPhoto (41).jpg" -resize 1600x -strip -quality 78 assets/img/hero.jpg
+  magick "$SRC_PHOTOS/SadlerFarms_083026_AerialPhoto (41).jpg" -resize 1600x -strip -quality 78 public/assets/img/hero.jpg
 }
 
 # ---------------------------------------------------------------- concepts
@@ -77,10 +78,10 @@ build_plans() {
     magick "$src" -resize 800x -strip -quality 76 "$OUT/plans/$n-800.webp"
     magick "$src" -strip -quality 80 "$OUT/plans/$n-full.webp"
   done
-  # Surveys: the signed originals are in assets/downloads/sadler-farms-<name>.pdf
+  # Surveys: the signed originals are in public/assets/downloads/sadler-farms-<name>.pdf
   # (served unaltered). Render them north-up (the sheets are drawn rotated) to
   # assets/site-plans/<name>.png for the web images and the package PDF.
-  for pdf in assets/downloads/sadler-farms-boundary-survey*.pdf; do
+  for pdf in public/assets/downloads/sadler-farms-boundary-survey*.pdf; do
     n=$(basename "$pdf" .pdf); n=${n#sadler-farms-}
     pdftoppm -r 150 -gray -singlefile "$pdf" "$TMP/$n"
     magick "$TMP/$n.pgm" -rotate 90 -strip -colorspace gray -depth 8 PNG8:"assets/site-plans/$n.png"
@@ -160,7 +161,7 @@ build_film() {
   # Video only; the soundtracks are separate, switchable HLS audio renditions.
   ffmpeg -v error -y "${inputs[@]}" -filter_complex "$fc" -map "[vout]" -an \
     -c:v libx264 -crf 16 -preset slow "$TMP/film.mp4"
-  hls_alt_audio "$TMP/film.mp4" "$OUT/video/film" "$total"
+  hls_alt_audio "$TMP/film.mp4" "$VID/film" "$total"
 }
 
 # Film soundtracks: narration mixed over a music bed (see assets/audio/README.md).
@@ -222,7 +223,7 @@ build_loops() {
     ffmpeg -v error -y -ss "$st" -t "$d" -i "$(clip "$c")" -an \
       -vf "fps=30,scale=1920:1080,$GRADE,format=yuv420p" \
       -c:v libx264 -crf 16 -preset slow "$TMP/$name.mp4"
-    hls "$TMP/$name.mp4" "$OUT/video/$name" 0
+    hls "$TMP/$name.mp4" "$VID/$name" 0
   done
 }
 
@@ -232,8 +233,8 @@ build_loops() {
 # (build_film, assets/media/video/film/) is kept but no longer linked.
 build_pitch() {
   python3 tools/pitch-film/build.py "$TMP/pitch.mp4"
-  hls "$TMP/pitch.mp4" "$OUT/video/pitch" 1
-  ffmpeg -v error -y -ss 4 -i "$TMP/pitch.mp4" -frames:v 1 -vf scale=1280:-2 -q:v 4 "$OUT/video/pitch/poster.jpg"
+  hls "$TMP/pitch.mp4" "$VID/pitch" 1
+  ffmpeg -v error -y -ss 4 -i "$TMP/pitch.mp4" -frames:v 1 -vf scale=1280:-2 -q:v 4 "$VID/pitch/poster.jpg"
 }
 
 case ${1:-all} in
@@ -246,4 +247,4 @@ case ${1:-all} in
   all)    build_photos; build_concepts; build_plans; build_film; build_pitch; build_loops ;;
   *) echo "usage: $0 [photos|concepts|plans|film|pitch|loops|all]" >&2; exit 1 ;;
 esac
-du -sh "$OUT"
+du -sh "$OUT" "$VID"

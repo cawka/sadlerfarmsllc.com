@@ -1,0 +1,36 @@
+---
+// Before/after slider (driven by src/scripts/site.js). One finger drags the divider;
+// double-tap or the expand button opens a full-screen view that can be zoomed.
+// beforeLarge/afterLarge (optional): bigger images; adds an expand button that opens them.
+interface Props {
+  before: string; beforeW: number | string; beforeH: number | string; beforeAlt: string;
+  after: string; afterW: number | string; afterH: number | string; afterAlt: string;
+  class?: string; start?: number | string; beforeLarge?: string; afterLarge?: string;
+}
+const { before, beforeW, beforeH, beforeAlt, after, afterW, afterH, afterAlt,
+        class: cls = '', start = 50, beforeLarge, afterLarge } = Astro.props;
+---
+<div class={`compare ${cls}`} style={`--pos: ${start}%`} data-before-large={afterLarge && beforeLarge} data-after-large={afterLarge}>
+  <div class="compare__layer">
+    <img class="compare__img" src={before} width={beforeW} height={beforeH}
+         alt={beforeAlt} loading="lazy" draggable="false">
+  </div>
+  <div class="compare__after">
+    <div class="compare__layer">
+      <img class="compare__img" src={after} width={afterW} height={afterH}
+           alt={afterAlt} loading="lazy" draggable="false">
+    </div>
+  </div>
+  <div class="compare__handle" aria-hidden="true"><span></span></div>
+  <span class="compare__tag compare__tag--before">Today</span>
+  <span class="compare__tag compare__tag--after">Artist&rsquo;s concept</span>
+  {afterLarge && <button class="compare__expand" type="button" aria-label="View larger">
+    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
+  </button>}
+  <div class="compare__zoom">
+    <button type="button" data-zoom="out" aria-label="Zoom out">&minus;</button>
+    <button type="button" data-zoom="fit" aria-label="Fit">Fit</button>
+    <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+  </div>
+  <input class="compare__range" type="range" min="0" max="100" value={start} aria-label="Compare today with the artist's concept">
+</div>

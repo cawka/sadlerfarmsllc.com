@@ -1,4 +1,4 @@
-name: Build and deploy Jekyll site
+name: Build and deploy site
 
 on:
   push:
@@ -22,29 +22,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          ruby-version: "3.3"
-          bundler-cache: true
+          node-version: 24
+          cache: npm
 
       - name: Setup Pages
-        id: pages
         uses: actions/configure-pages@v5
         with:
           enablement: true
 
-      - name: Stamp the deployed commit (footer)
-        run: |
-          echo "sha: ${GITHUB_SHA::7}" > _data/build.yml
+      - name: Install
+        run: npm ci
 
-      - name: Build with Jekyll
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
+      # GITHUB_SHA is shown (shortened) in the footer.
+      - name: Build with Astro
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
 
   deploy:
     needs: build

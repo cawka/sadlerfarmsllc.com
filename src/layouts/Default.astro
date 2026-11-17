@@ -1,0 +1,89 @@
+---
+import '../styles/style.scss';
+import siteJs from '../scripts/site.js?url';
+
+interface Props {
+  title?: string;
+  description?: string;
+  preloadImage?: string;
+  video?: { name: string; description: string; thumbnail: string; content: string; uploadDate: string; duration: string };
+}
+const site = {
+  title: 'Sadler Farms LLC',
+  description: 'Sadler Farms: almost 300 acres with more than a mile of waterfront on Wheeler Lake and the Tennessee River in Limestone County, Alabama.',
+  url: 'https://sadlerfarmsllc.com',
+};
+const { title = site.title, description = site.description, preloadImage, video } = Astro.props;
+const canonical = new URL(Astro.url.pathname, site.url).href;
+// The deployed commit, shown small in the footer (set by the GitHub Actions build).
+const sha = (process.env.GITHUB_SHA || '').slice(0, 7);
+const place = {
+  '@context': 'https://schema.org',
+  '@type': 'Place',
+  name: 'Sadler Farms',
+  description: site.description,
+  url: site.url,
+  image: `${site.url}/assets/img/hero.jpg`,
+  address: { '@type': 'PostalAddress', streetAddress: 'Davis Road & Snake Road', addressRegion: 'AL', addressCountry: 'US' },
+  geo: { '@type': 'GeoCoordinates', latitude: 34.7768, longitude: -87.1772 },
+  containedInPlace: { '@type': 'AdministrativeArea', name: 'Limestone County, Alabama' },
+};
+const videoLd = video && {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: video.name,
+  description: video.description,
+  thumbnailUrl: site.url + video.thumbnail,
+  contentUrl: site.url + video.content,
+  uploadDate: video.uploadDate,
+  duration: video.duration,
+};
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Sadler Farms">
+  <meta property="og:image:width" content="1600">
+  <meta property="og:image:height" content="1198">
+  <meta property="og:image:alt" content="Aerial view of Sadler Farms pasture and forest on Wheeler Lake">
+  <meta name="theme-color" content="#1f3324">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high">}
+  <meta property="og:url" content={site.url}>
+  <meta property="og:image" content={`${site.url}/assets/img/hero.jpg`}>
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href={canonical}>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(place)}></script>
+  {videoLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(videoLd)}></script>}
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+</head>
+<body>
+  <slot />
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <p>&copy; {new Date().getFullYear()} {site.title} &middot; Alabama</p>
+      {video && (
+      <p class="site-footer__credit">Film music: &ldquo;Pennsylvania Rose&rdquo; Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>), <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> &middot; Birdsong: Northern Mockingbird, Sandtouch Limited Company, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:NorthernMockingbirdSandtouch2.ogg">Wikimedia Commons</a> &middot; Narration: AI voice</p>
+      )}
+      <p class="site-footer__made">Made by <a href="https://labs.a2cons.com">A2 Labs</a>{sha && <Fragment> <span class="site-footer__ver">{sha}</span></Fragment>}</p>
+      {/* Contact email hidden for now — will point to realtor later. */}
+    </div>
+  </footer>
+
+  <script is:inline src="https://cdn.jsdelivr.net/npm/hls.js@1.5.20/dist/hls.min.js"></script>
+  <script is:inline src={siteJs}></script>
+</body>
+</html>
